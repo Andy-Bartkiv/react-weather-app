@@ -7,13 +7,13 @@ const Header = () => {
         <div className='App-header'>
         
             <MyButton
-                style = {{ marginLeft: '1em', fontSize: '.75em' }} 
+                style = {{ marginLeft: '1em', fontSize: '.75em', zIndex: '-10' } } 
                 // onClick = { () => setModal(true) }
             >
                 Add New City
             </MyButton>
             
-            <h2>React Weather App</h2>
+            <h2>Weather App</h2>
 
             <Clock />
         

@@ -16,6 +16,7 @@ body {
   --bg2-color: #282c44;
   --prm-color: orange;
   --sec-color: #61dafb;
+  --sec-color: teal;
   --wht-color: whitesmoke;
 }
 
@@ -46,7 +47,33 @@ h2, h3, h4 {
 .App-body {
   padding: 0 1em;
   flex: 1 1 auto;
-  border: .1em solid green;
+  /* border: .1em solid green; */
+}
+
+.new-city-form {
+  padding: .25em 0;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 1em;
+}
+
+.city-list {
+  margin-top: .5em;
+  display: flex;
+  flex-direction: column;
+  gap: .5em;
+}
+
+.city {
+  min-height: 1.75em;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  padding: .25em;
+  border: 0.1em solid var(--sec-color);
+  border-radius: .25em;
+  font-size: smaller;
 }
 
 
