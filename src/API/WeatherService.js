@@ -8,7 +8,12 @@ export default class WeatherService {
         return resposne;
     }
 
-
+    static async getForecastByName(name) {
+        const AK = '466b0e43bd22d0829d4cc8843b1487ca';
+        const resposne = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${name}&units=metric&appid=${AK}`);
+        return resposne;
+    }
+    
 
 
 

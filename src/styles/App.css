@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato&family=Lobster+Two:ital,wght@1,700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Lato&family=Lobster+Two:ital,wght@1,700&family=Roboto&display=swap');
 
 * {
 	margin: 0;
@@ -59,7 +58,7 @@ h2, h3, h4 {
 }
 
 .new-city-form {
-  height: .5em;
+  height: 2.5em;
   padding: .5em 0;
   display: flex;
   justify-content: center;
@@ -69,14 +68,14 @@ h2, h3, h4 {
   transition: height .5s;
 }
 
-.new-city-form:hover, .new-city-form:focus {
+/* .new-city-form:hover, .new-city-form:focus {
   height: 2.5em;
-}
+} */
 
 .city-list {
   /* flex: 100; */
   height: 100%;
-  /* margin-top: .25em; */
+  margin-top: .5em;
   display: flex;
   flex-direction: column;
   gap: .5em;
@@ -107,15 +106,20 @@ hr {
 .city.delete { height: 0; padding-top: 0; padding-bottom: 0; transform: scale(.25); opacity: .25; border: none }
 
 .city-item {
-  border: 1px solid yellow;
+  /* border: 1px solid yellow; */
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
 }
 
+.city-item img {
+  height: 1.25em;
+  transform: scale(2);
+}
+
 .city-header {
-  border: 1px solid red;
+  /* border: 1px solid red; */
   width: 100%;
   display: flex;
   justify-content: space-around;
@@ -123,7 +127,7 @@ hr {
 }
 
 .city-body {
-  border: 1px solid red;
+  /* border: 1px solid red; */
   width: 100%;
   height: 0%;
   display: none;
@@ -144,6 +148,9 @@ hr {
   gap: .25em
 }
 
+button {
+  font-family: 'Lobster Two', cursive;
+}
 
 /* .App {
   text-align: center;

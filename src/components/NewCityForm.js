@@ -1,26 +1,27 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import MyInput from "./UI/input/MyInput";
 import MyButton from "./UI/button/MyButton";
 
-function NewCityForm({ addCity }) {
+function NewCityForm({ cities, setCities }) {
 
     const [cityName, setCityName] = useState('');
 
     const addNewCity = (event) => {
 			event.preventDefault();
-			addCity({id: Date.now(), name: (cityName !=='') ? cityName : 'New City'});
+      const newCity = {id: Date.now(), name: (cityName !=='') ? cityName : 'New City'}
+			setCities([...cities, newCity]);
 			setCityName('');
     }
     
     return (
       <form className="new-city-form" onSubmit={ addNewCity }>
         <MyInput 
-			type="text" 
-			placeholder="New City" 
-			value={ cityName } 
-			onChange= { e => setCityName(e.target.value)}
+          type="text" 
+          placeholder="New City" 
+          value={ cityName } 
+          onChange= { e => setCityName(e.target.value)}
         />
-        <MyButton style={{ minWidth: '25%' }}> Add New City</MyButton>
+        <MyButton style={{ minWidth: '25%' }}>Add New City</MyButton>
       </form>
     )
 }

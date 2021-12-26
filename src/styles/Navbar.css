@@ -1,0 +1,49 @@
+.App-navbar {
+    /* --prm-color: #088;
+    --sec-color: orange; */
+    padding: 0 1em;
+    list-style-type: none;
+    overflow: hidden;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    margin-bottom: .25em;
+  }
+  
+  .App-navbar li {
+    width: 25%;
+    font-size: .75em;
+    transition: .25s;
+    background-color: #282c34;
+    border-radius: .5em;
+    border-bottom: .1em solid var(--prm-color);
+  }
+  
+  .App-navbar a {
+    display: block;
+    color: var(--prm-color);
+    text-align: center;
+    padding: .25em 1em;
+    text-decoration: none;
+  }
+  
+  .App-navbar div {
+    display: block;
+    color: var(--prm-color);
+    text-align: center;
+    padding: .25em 1em;
+    /* text-decoration: none; */
+  }
+  
+  .App-navbar li.post_id { flex: 1 0 0px }
+  .App-navbar li.post_id:hover { --prm-color: teal; }
+  
+  .App-navbar li:hover {
+    --prm-color: orange;
+    width: 1.1;
+  }
+  
+  .App-navbar .active {
+    width: 80%;
+    background-color: #282c44;
+  }
