@@ -7,10 +7,10 @@ const AppRouter = () => {
 
     return (
         <Routes className='App-body'>
-            <Route path="/default" element = { <Default /> }/>
+            <Route path="/five-cities" element = { <Default /> }/>
             <Route path="/my-list" element = { <MyList /> }/>
             <Route path="/map" element = { <Map /> }/>
-            <Route path="/*" element = { <Navigate replace to="/default" /> }/>
+            <Route path="/*" element = { <Navigate replace to="/five-cities" /> }/>
         </Routes>
     )
 }

@@ -1,18 +1,51 @@
 import { Map, Marker, ZoomControl, Overlay } from "pigeon-maps"
+import { useState, useContext } from "react"
+import { DataContext } from "../context"
+import CityMapOverlay from "./CityMapOverlay"
 
 const PigeonMap = ({ center }) => {
+
+    const {fiveCities, myCities} = useContext(DataContext);
+    const [mapCenter, setMapCenter] = useState(center)
+    const [zoom, setZoom] = useState(5);
+
+    const allCities = [...fiveCities];
+    [...myCities].forEach(myCity => {
+        if (!allCities.find(city => city.id === myCity.id))
+            allCities.push(myCity);
+    })
+
     return (
         <Map 
-            // defaultCenter={[51, 0]} 
-            defaultCenter={ center } 
-            defaultZoom={5}>
+            // defaultCenter={ center } 
+            defaultZoom={5}
+            center={ mapCenter }
+            zoom={ zoom }
+            onBoundsChanged={({ zoom }) => { 
+                setZoom(zoom);
+                setMapCenter(null); 
+            }}
+        >
             <ZoomControl
                 style={{left:'auto', right: '.5em', top: '.5em'}} 
-                buttonStyle={{ background: '#0886', color: 'orange'}}/>
-            <Marker width={25} anchor={center} />
-            <Overlay anchor={center} offset={[0, '50%']}>
-                <div style={{ color: 'orange' }}>KURSK</div>
-            </Overlay>
+                buttonStyle={{ background: '#282c44aa', color: 'orange'}}/>
+            {/* <Marker width={25} anchor={center} /> */}
+            { allCities.map(city => {
+                // console.log(city)
+                return (
+                    <Overlay key={city.id} anchor={ [city.coord.lat, city.coord.lon] }>
+                        <CityMapOverlay 
+                            city={ city } 
+                            zoom={zoom} 
+                            setMapCenter={ setMapCenter } 
+                            setZoom={ setZoom}/>
+                    </Overlay>
+                )
+            }
+
+            )}
+
+
         </Map>
     )
 }

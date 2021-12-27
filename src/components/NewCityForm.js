@@ -2,28 +2,35 @@ import { useState } from "react";
 import MyInput from "./UI/input/MyInput";
 import MyButton from "./UI/button/MyButton";
 import WeatherService from "../API/WeatherService";
+import processWeatherData from "../utils/processWeatherData";
 
 function NewCityForm({ cities, setCities }) {
 
     const [cityName, setCityName] = useState('');
 
-    const addNewCity = async (event) => {
+    async function addNewCity(event) {
 			event.preventDefault();
-
+      if (cityName === '') return;
       const resp = await WeatherService.getGeo(cityName);
       const validName = (resp.data.length > 0);
       
-      console.log(resp.data);
-      resp.data.forEach( (item, ind) => 
-        console.log(`${ind}. ${item.name}, ${item.country}, ${item.state}`)
-      )
+      const goodCity = resp.data.find(respCity => {
+        return !cities.find(city => {
+          // console.log(city.name + city.country, respCity.name + respCity.country)
+          return (respCity.name + respCity.country == city.name + city.country)
+        })
+      })
 
-      if (validName) {
-        const newCity = {id: Date.now(), name: resp.data[0].name, country: resp.data[0].country}
+      if (validName && goodCity) {
+        const citySearch = `${goodCity.name}, ${goodCity.country}`;
+        // console.log(citySearch);
+        const resp2 = await WeatherService.getWeather(citySearch);
+        const newCity = processWeatherData(resp2);
+        // console.log(newCity);
         setCities([...cities, newCity]);
         setCityName('');
       } else {
-        alert('Please enter valid City Name')
+        alert('Please Enter Valid City Name!')
       }
     }
     

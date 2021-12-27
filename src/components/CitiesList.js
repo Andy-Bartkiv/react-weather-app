@@ -14,13 +14,16 @@ const CitiesList = ({ cities, setCities }) => {
     function deleteCity(cityID, event) {
         event.stopPropagation();
         setDelID(cityID);
-        setTimeout( () =>
+        setTimeout( () => {
             setCities(cities.filter( city => city.id !== cityID))
-        , 500); // timeout for animation
+            setDelID(null);
+        }, 500); // timeout for animation
     }
 
     // async ??????
     async function toggleActive(cityID) {
+        console.table(cities);
+
         const activeCity = (activeID !== cityID)
             ? cityID
             : null
@@ -31,9 +34,9 @@ const CitiesList = ({ cities, setCities }) => {
             if (city.country) 
                 cityName += `,` + city.country;
             console.log(cityName);
-            const resp = await WeatherService.getForecast(cityName);
-            console.log(resp.data);
-            setCoord([resp.data.city.coord.lat, resp.data.city.coord.lon])
+            // const resp = await WeatherService.getForecast(cityName);
+            // console.log(resp.data);
+            setCoord([city.coord.lat, city.coord.lon])
         }
     }
 
@@ -66,7 +69,10 @@ const CitiesList = ({ cities, setCities }) => {
                         key={ city.id } 
                         className={ `city` + clsActive + clsDel } 
                         onClick={ () => toggleActive(city.id) }>    
-                            <CityItem city={ city } deleteCity={ deleteCity } getWeather={ getWeather } />
+                            <CityItem 
+                                city={ city } 
+                                deleteCity={ deleteCity } 
+                                getWeather={ getWeather } />
                     </div>)
                 }
             )}

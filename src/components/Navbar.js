@@ -7,7 +7,7 @@ const Navbar = () => {
     
     return (
         <ul className='App-navbar'> 
-            <li className={(active === '/default') ? 'active' : '' }><Link to={ '/default' }>Five Cties</Link></li>
+            <li className={(active === '/five-cities') ? 'active' : '' }><Link to={ '/five-cities' }>Five Cties</Link></li>
             <li className={(active === '/my-list') ? 'active' : '' }><Link to={ '/my-list' }>My List</Link></li>
             <li className={(active === '/map') ? 'active' : '' }><Link to={ '/map' }>Map</Link></li>
         </ul>

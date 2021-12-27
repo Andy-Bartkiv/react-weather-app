@@ -30,8 +30,8 @@ const CityItem = ({ city, deleteCity, getWeather }) => {
             </div>
             <hr/>
             <div className="city-body">
-                { forecast.map(day => 
-                    <div className="forecast-day">
+                { forecast.map((day, i) => 
+                    <div className="forecast-day" key={i}>
                         {day}
                         <div>{city.time}</div>
                         <div>{city.temp && temp}</div>

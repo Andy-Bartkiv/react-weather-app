@@ -3,12 +3,12 @@ import cls from './Clock.module.css'
 import { DataContext } from '../../../context';
 
 function Clock() {
-	const { setMin } = useContext(DataContext);
-
+	
 	const [date, setDate] = useState(new Date());
 	const tick = () => setDate(new Date());
 	const minutes = date.toLocaleTimeString('en-GB', {minute: '2-digit'});
-
+	
+	const { setMin } = useContext(DataContext);
 	useEffect( () => setMin(minutes), [minutes] );
 
 	useEffect( () => {
