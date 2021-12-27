@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import MyInput from "./UI/input/MyInput";
 import MyButton from "./UI/button/MyButton";
 import WeatherService from "../API/WeatherService";

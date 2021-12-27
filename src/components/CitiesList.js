@@ -1,8 +1,7 @@
-import MyButton from "./UI/button/MyButton";
+import WeatherService from "../API/WeatherService";
+import processWeatherData from "../utils/processWeatherData";
 import CityItem from "./CityItem";
 import { useContext, useState } from "react";
-import WeatherService from "../API/WeatherService";
-import processData from "../utils/processData";
 import { DataContext } from "../context";
 
 const CitiesList = ({ cities, setCities }) => {
@@ -33,7 +32,7 @@ const CitiesList = ({ cities, setCities }) => {
                 cityName += `,` + city.country;
             console.log(cityName);
             const resp = await WeatherService.getForecast(cityName);
-            console.log(resp.data.city.coord);
+            console.log(resp.data);
             setCoord([resp.data.city.coord.lat, resp.data.city.coord.lon])
         }
     }
@@ -48,7 +47,7 @@ const CitiesList = ({ cities, setCities }) => {
         const resp = await WeatherService.getWeather(cityName);
         console.log(resp.data);
     
-        const cityData = processData(resp);
+        const cityData = processWeatherData(resp);
         const newCities = [...cities].map(city => 
           (city.id === cityID) ? {...city, ...cityData} : city 
         )
@@ -67,19 +66,7 @@ const CitiesList = ({ cities, setCities }) => {
                         key={ city.id } 
                         className={ `city` + clsActive + clsDel } 
                         onClick={ () => toggleActive(city.id) }>    
-                            <CityItem city={ city } />
-                            <div className="city_btns">
-                                <MyButton 
-                                    onClick={ (event) => getWeather(city.id, event) } 
-                                    style={{ padding: '.25em .5em' }}>
-                                    W
-                                </MyButton>
-                                <MyButton 
-                                    onClick={ (event) => deleteCity(city.id, event) } 
-                                    style={{ padding: '.25em .5em' }}>
-                                    X
-                                </MyButton>
-                            </div>
+                            <CityItem city={ city } deleteCity={ deleteCity } getWeather={ getWeather } />
                     </div>)
                 }
             )}

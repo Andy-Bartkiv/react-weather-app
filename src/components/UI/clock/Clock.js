@@ -1,9 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import cls from './Clock.module.css'
+import { DataContext } from '../../../context';
 
 function Clock() {
+	const { setMin } = useContext(DataContext);
+
 	const [date, setDate] = useState(new Date());
 	const tick = () => setDate(new Date());
+	const minutes = date.toLocaleTimeString('en-GB', {minute: '2-digit'});
+
+	useEffect( () => setMin(minutes), [minutes] );
 
 	useEffect( () => {
 		const timerID = setInterval(() => tick(), 1000);

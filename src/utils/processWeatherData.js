@@ -1,4 +1,4 @@
-export default function processData(resp) {
+export default function processWeatherData(resp) {
     const time = new Date(Date.now() + (resp.data.timezone*1000));
     const dataObj = {
         country: resp.data.sys.country,
