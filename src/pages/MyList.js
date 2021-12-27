@@ -14,8 +14,6 @@ const MyList = () => {
 
             <hr />
 
-            <h3>My List</h3>
-
             <CitiesList cities={ myCities } setCities={ setMyCities }/>
 
         </div>

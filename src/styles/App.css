@@ -50,6 +50,7 @@ h2, h3, h4 {
 }
 
 .App-body {
+  margin-bottom: .25em;
   padding: 0 1em;
   flex: 1 1 auto;
   /* border: .1em solid green; */
@@ -58,19 +59,17 @@ h2, h3, h4 {
 }
 
 .new-city-form {
+  margin: 0 auto;
+  width: 75%;
   height: 2.5em;
   padding: .5em 0;
   display: flex;
   justify-content: center;
   align-items: stretch;
   gap: 1em;
-  overflow: hidden;
-  transition: height .5s;
 }
 
-/* .new-city-form:hover, .new-city-form:focus {
-  height: 2.5em;
-} */
+.new-city-form button { font-family: 'Lobster Two', cursive; }
 
 .city-list {
   /* flex: 100; */
@@ -116,6 +115,7 @@ hr {
 .city-item img {
   height: 1.25em;
   transform: scale(2);
+  /* filter: grayscale(.25); */
 }
 
 .city-header {
@@ -146,10 +146,6 @@ hr {
   display: flex;
   align-items: flex-start;
   gap: .25em
-}
-
-button {
-  font-family: 'Lobster Two', cursive;
 }
 
 /* .App {

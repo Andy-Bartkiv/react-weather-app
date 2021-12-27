@@ -1,6 +1,7 @@
 import { Route, Routes, Navigate } from "react-router-dom";
 import Default from "../pages/Default";
 import MyList from "../pages/MyList";
+import Map from "../pages/Map";
 
 const AppRouter = () => {
 
@@ -8,6 +9,7 @@ const AppRouter = () => {
         <Routes className='App-body'>
             <Route path="/default" element = { <Default /> }/>
             <Route path="/my-list" element = { <MyList /> }/>
+            <Route path="/map" element = { <Map /> }/>
             <Route path="/*" element = { <Navigate replace to="/default" /> }/>
         </Routes>
     )

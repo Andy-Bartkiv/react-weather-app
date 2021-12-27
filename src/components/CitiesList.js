@@ -1,10 +1,13 @@
 import MyButton from "./UI/button/MyButton";
 import CityItem from "./CityItem";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import WeatherService from "../API/WeatherService";
 import processData from "../utils/processData";
+import { DataContext } from "../context";
 
 const CitiesList = ({ cities, setCities }) => {
+
+    const {setCoord} = useContext(DataContext);
 
     const [delID, setDelID] = useState(null);
     const [activeID, setActiveID] = useState(null);
@@ -24,23 +27,30 @@ const CitiesList = ({ cities, setCities }) => {
             : null
         setActiveID(activeCity);
         if (activeCity) {
-            const cityName = cities.find(city => cityID === city.id).name;
+            const city = cities.find(city => city.id === cityID);
+            let cityName = city.name;
+            if (city.country) 
+                cityName += `,` + city.country;
             console.log(cityName);
-            const resp = await WeatherService.getForecastByName(cityName);
-            console.log(resp.data);
+            const resp = await WeatherService.getForecast(cityName);
+            console.log(resp.data.city.coord);
+            setCoord([resp.data.city.coord.lat, resp.data.city.coord.lon])
         }
     }
 
-    async function getWeather(cityId, event) {
+    async function getWeather(cityID, event) {
         event.stopPropagation();
-        
-        const cityName = cities.find(city => city.id === cityId).name;
-        const resp = await WeatherService.getCityByName(cityName);
+
+        const city = cities.find(city => city.id === cityID);
+        let cityName = city.name;
+        if (city.country) 
+            cityName += `,` + city.country;
+        const resp = await WeatherService.getWeather(cityName);
         console.log(resp.data);
     
         const cityData = processData(resp);
         const newCities = [...cities].map(city => 
-          (city.id === cityId) ? {...city, ...cityData} : city 
+          (city.id === cityID) ? {...city, ...cityData} : city 
         )
         setCities(newCities);
         console.table(newCities)

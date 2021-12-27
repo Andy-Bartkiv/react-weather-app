@@ -1,51 +1,40 @@
 import axios from "axios";
+import appid from "../data/appid";
 
 export default class WeatherService {
 
-    static async getCityByName(name) {
-        const AK = '466b0e43bd22d0829d4cc8843b1487ca';
-        const resposne = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${name}&units=metric&appid=${AK}`);
-        return resposne;
-    }
-
-    static async getForecastByName(name) {
-        const AK = '466b0e43bd22d0829d4cc8843b1487ca';
-        const resposne = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${name}&units=metric&appid=${AK}`);
-        return resposne;
-    }
-    
-
-
-
-    static async getAll(limit = 10, page = 1) {
-        const resposne = await axios.get('https://jsonplaceholder.typicode.com/posts', {
+    static async getWeather(name, units='metric') {
+        const resposne = await axios.get(`https://api.openweathermap.org/data/2.5/weather`, {
             params: {
-                _limit: limit,
-                _page: page
-            }
+                q: name,
+                units,
+                appid,
+             }
         });
         return resposne;
     }
 
-    static async getPostByID(id) {
-        const resposne = await axios.get('https://jsonplaceholder.typicode.com/posts/' + id);
+    static async getForecast(name, units='metric') {
+        const resposne = await axios.get(`https://api.openweathermap.org/data/2.5/forecast`, {
+            params: {
+                q: name,
+                units,
+                appid,
+             }
+        });
         return resposne;
     }
-
-    static async getCommentsByID(id) {
-        const resposne = await axios.get('https://jsonplaceholder.typicode.com/posts/' + id + '/comments');
+    
+    static async getGeo(name, limit = 5) {
+        const resposne = await axios.get(`http://api.openweathermap.org/geo/1.0/direct`, {
+            params: {
+                q: name,
+                limit,
+                appid,
+             }
+        });
         return resposne;
     }
-
-    static async postNewPost(newPost) {
-        const resposne = await axios.post('https://jsonplaceholder.typicode.com/posts', newPost);
-        return resposne;
-    }
-
-    static async patchPost(id, patchObj) {
-        const resposne = await axios.patch('https://jsonplaceholder.typicode.com/posts/' + id, patchObj);
-        return resposne;
-    }
-
+    
 }
 
