@@ -17,7 +17,7 @@ body {
   font-size: calc(10px + 2vmin);
   --bg1-color: #282c34;
   --bg2-color: #282c44;
-  --prm-color: orange;
+  --prm-color: #ffa500;
   --sec-color: #61dafb;
   --sec-color: teal;
   --wht-color: whitesmoke;
@@ -51,7 +51,7 @@ h2, h3, h4 {
 
 .App-body {
   margin-bottom: .25em;
-  padding: 0 1em;
+  padding: 0 2.5vmin;
   flex: 1 1 auto;
   /* border: .1em solid green; */
   display: flex;
@@ -69,17 +69,17 @@ h2, h3, h4 {
   justify-content: center;
   align-items: stretch;
   gap: 1em;
+  transition: .5s;
 }
 
 .new-city-form button { font-family: 'Lobster Two', cursive; }
 
 .city-list {
-  /* flex: 100; */
   height: 100%;
-  margin-top: .5em;
   display: flex;
   flex-direction: column;
-  gap: .5em;
+  /* margin-top: .5em; */
+  /* gap: .5em; */
 }
 
 hr {
@@ -118,6 +118,18 @@ hr {
   height: 1.25em;
   transform: scale(2);
   /* filter: grayscale(.25); */
+}
+
+.img-weather {
+  position: absolute;
+  top: -8.5vh; left: -5vw;
+  /* filter: opacity(.95); */
+  /* transform: scale(1.5); */
+  height: 7.5vmin;
+  width: 7.5vmin;
+  /* border: 1vh solid red; */
+  background: #282c4488;
+  border-radius: 50%;
 }
 
 .city-header {
@@ -160,42 +172,3 @@ hr {
   align-items: flex-start;
   gap: .25em
 }
-
-/* .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */

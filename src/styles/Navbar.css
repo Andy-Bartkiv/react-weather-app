@@ -1,7 +1,7 @@
 .App-navbar {
     --prm-color: teal;
     --sec-color: orange;
-    padding: 0 1em;
+    padding: 0 2.5vmin;
     list-style-type: none;
     overflow: hidden;
     display: flex;
@@ -32,18 +32,18 @@
     color: var(--prm-color);
     text-align: center;
     padding: .25em 1em;
-    /* text-decoration: none; */
   }
   
-  .App-navbar li.post_id { flex: 1 0 0px }
-  .App-navbar li.post_id:hover { --prm-color: teal; }
-  
-  .App-navbar li:hover {
-    --prm-color: orange;
-    width: 1.1;
+  li input {
+    margin: .5em;
+    position: absolute;
+    float: left;
   }
+
+  .App-navbar li:hover:not(.active) { --prm-color: orange; }
+  /* .App-navbar li.active:hover { --prm-color: teal; } */
   
   .App-navbar .active {
-    width: 80%;
+    width: 70%;
     background-color: #282c44;
   }

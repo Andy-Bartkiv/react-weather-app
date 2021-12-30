@@ -1,13 +1,17 @@
 import TimeLocal from "./TimeLocal";
 import MyButton from "./UI/button/MyButton";
+import { Link } from "react-router-dom";
 
-const CityItem = ({ city, deleteCity, getWeather }) => {
+const CityItem = ({ city, deleteCity, getWeather, is3D }) => {
     const temp = ((city.temp > 0) ? '+' : '-') + ` ${Math.round(Math.abs(city.temp))} \u00b0C`;
     const forecast = [1,2,3,4,5]
 
     return (
         <div className="city-item">
             <div className="city-header">
+                <Link style={{ textDecoration:'none', color: 'teal' }} to={ '/map' }>
+                    <MyButton>{ (is3D) ? 'G' : 'M' }</MyButton>
+                </Link>
                 <div style={{ width:'auto' }}>{city.name}, {city.country}</div>
                 <TimeLocal offset={ city.offset } />
                 <div>{city.temp && temp}</div>

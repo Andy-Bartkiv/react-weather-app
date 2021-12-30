@@ -1,0 +1,11 @@
+.my_switch {
+    position: relative;
+    width: 0.95 em;
+    height: 0.5 em;
+    appearance: none;
+    outline: none;
+    background-color: orange;
+    border-radius: 0.1em;
+    transition: 0.25s;
+    cursor: pointer;
+}
