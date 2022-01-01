@@ -3,6 +3,7 @@ import '../styles/Navbar.css';
 import { useContext } from "react";
 import { DataContext } from "../context";
 import MySwitch from "./UI/switch/MySwitch";
+import { MdOutlineMap, MdOutlineLanguage} from 'react-icons/md'
 
 const Navbar = () => {
 
@@ -14,7 +15,10 @@ const Navbar = () => {
             <li className={(active === '/map') ? 'active' : '' }>
                 { (active === '/map') &&
                     <div style={{ position:'absolute', paddingTop:'.35em' }}>
+                        <MdOutlineMap style={{ color: (is3D) ? 'teal' : 'orange' }}/>
                         <MySwitch isToggled= { is3D } onToggle= { () => setIs3D(!is3D) }/>
+                        <MdOutlineLanguage style={{ color: (!is3D) ? 'teal' : 'orange'}}/>
+
                     </div>
                    
                 }

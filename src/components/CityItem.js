@@ -13,7 +13,6 @@ const CityItem = ({ city, deleteCity, getWeather, is3D }) => {
     const temp = ((city.temp > 0) ? '+' : '-') 
         + ` ${Math.round(Math.abs(cityTemp))} \u00b0${isCelsius?"C":"F"}`;
     const forecast = [1,2,3,4,5]
-    console.log(convertCtoF(city.temp))
 
     return (
         <div className="city-item">

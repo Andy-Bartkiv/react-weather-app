@@ -1,25 +1,25 @@
 import Clock from "./UI/clock/Clock";
-import MyButton from "./UI/button/MyButton";
 import MySwitch from "./UI/switch/MySwitch";
 import { useContext } from "react";
 import { DataContext } from "../context";
+import { RiFahrenheitLine, RiCelsiusLine } from 'react-icons/ri'
 
 const Header = () => {
 
     const { isCelsius, setIsCelsius } = useContext(DataContext);
-    console.log(isCelsius);
 
     return (
         <div className='App-header'>
         
-            <div style={{ width:'25%', padding:'0 .5em', display:'flex', flexDirection:'column' }}>
-                {/* <MyButton>Refresh</MyButton> */}
+            <div style={{ width:'25%', padding:'0 .75em', display:'flex', alignItems:'center', fontSize: '.85em' }}>
+                <RiFahrenheitLine style={{ color: (isCelsius) ? 'teal' : 'orange'}} />
                 <MySwitch isToggled={ isCelsius } onToggle={ () => setIsCelsius(!isCelsius) }/>
+                <RiCelsiusLine style={{ color: (!isCelsius) ? 'teal' : 'orange'}}/>
             </div>
             
-            <h2>Andy's Weather App</h2>
+            <h2>Andy's Weather</h2>
 
-            <Clock style={{ minWidth:'25%' }}/>
+            <Clock style={{ width:'25%' }}/>
         
         </div>
     )

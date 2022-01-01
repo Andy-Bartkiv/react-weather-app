@@ -46,4 +46,5 @@
   .App-navbar .active {
     width: 70%;
     background-color: #282c44;
+    font-weight: 900;
   }
