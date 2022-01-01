@@ -13,7 +13,7 @@ function App() {
   
   const userData = JSON.parse(localStorage.getItem('WeatherApp.MyCities'));  
   const [myCities, setMyCities] = useState( 
-    (userData.length > 0) ? userData : [] );
+    (userData) ? userData : [] );
 
   const [min, setMin] = useState(null);
   const [is3D, setIs3D] = useState(true);
@@ -27,27 +27,26 @@ function App() {
   }, [myCities])
 
   return (
-    // <DataContext.Provider value={{ 
-    //   fiveCities, setFiveCities, 
-    //   myCities, setMyCities, 
-    //   min, setMin,
-    //   coord, setCoord,
-    //   is3D, setIs3D,
-    //   isCelsius, setIsCelsius,
-    // }}>
-    // <HashRouter>{/* <BrowserRouter> */}
+    <DataContext.Provider value={{ 
+      fiveCities, setFiveCities, 
+      myCities, setMyCities, 
+      min, setMin,
+      coord, setCoord,
+      is3D, setIs3D,
+      isCelsius, setIsCelsius,
+    }}>
+    <HashRouter>{/* <BrowserRouter> */}
       <div className="App">
 
-        TEST
-        {/* <Header />
+        <Header />
 
-        <Navbar /> */}
+        <Navbar />
           
-        {/* <AppRouter /> */}
+        <AppRouter />
         
       </div>
-    // </HashRouter>
-    // </DataContext.Provider>
+    </HashRouter>
+    </DataContext.Provider>
   );
 }
 

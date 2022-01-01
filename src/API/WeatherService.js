@@ -26,7 +26,7 @@ export default class WeatherService {
     }
     
     static async getGeo(name, limit = 5) {
-        const resposne = await axios.get(`http://api.openweathermap.org/geo/1.0/direct`, {
+        const resposne = await axios.get(`https://api.openweathermap.org/geo/1.0/direct`, {
             params: {
                 q: name,
                 limit,

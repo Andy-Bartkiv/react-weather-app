@@ -58,7 +58,7 @@ const GlobeGL = ({ center, dim }) => {
           if (city.icon) 
             return (
               `<img class="img-weather" 
-                src="http://openweathermap.org/img/w/${city.icon}.png"/>`)
+                src="https://openweathermap.org/img/w/${city.icon}.png"/>`)
         }} 
 
         // onLabelClick={ city => handleLabelClick(city) }

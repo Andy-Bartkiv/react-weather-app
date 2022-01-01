@@ -24,7 +24,7 @@ const CityMapOverlay = ({ city, zoom, setMapCenter, setZoom }) => {
             { city.icon &&
                 <img 
                     style={{ height: '1em', transform: 'scale(2)' }}
-                    src={`http://openweathermap.org/img/w/${city.icon}.png`} 
+                    src={`https://openweathermap.org/img/w/${city.icon}.png`} 
                     alt={`${city.weather}`}
                 />
             }
