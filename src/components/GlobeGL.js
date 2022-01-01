@@ -1,17 +1,14 @@
 import { useRef, useEffect, useContext, useState } from 'react';
 import { DataContext } from "../context";
 import Globe from 'react-globe.gl';
-import globeImage from '../data/earth-blue-marble.jpg'
+import globeImage from '../data/earth-blue-marble.jpg';
+import convertCtoF from '../utils/convertCtoF';
 
 const GlobeGL = ({ center, dim }) => {
 
-  console.log(dim)
-
-  const {fiveCities, myCities} = useContext(DataContext);
+  const { fiveCities, myCities, isCelsius} = useContext(DataContext);
   const [centerPOV, setCenterPOV] = useState(center);
   const globeEl = useRef();
-  
-  const containerMin = 500;
   
   const allCities = [...fiveCities];
   [...myCities].forEach(myCity => {
@@ -28,24 +25,6 @@ const GlobeGL = ({ center, dim }) => {
   useEffect(() => {
     globeEl.current.pointOfView({ lat: centerPOV[0], lng: centerPOV[1] });
   }, [centerPOV])
-
-  function handleLabelClick(city) {
-    const rotationDelay = 0;
-    const rotationPrecission = 25;
-    let [lat, lon] = [...centerPOV];
-    const dLat = (centerPOV[0] - city.coord.lat)/rotationPrecission;
-    const dLon = (centerPOV[1] - city.coord.lon)/rotationPrecission;
-    let counter = 0;
-    let timer = setTimeout( function tick() {
-      counter++;
-      [lat, lon] = [lat-dLat, lon-dLon]
-      setCenterPOV([lat, lon])
-      if (counter < rotationPrecission) 
-        timer = setTimeout( tick, rotationDelay );
-      else 
-        setCenterPOV([city.coord.lat, city.coord.lon]) 
-    }, rotationDelay);
-  }
 
     return (
         <Globe
@@ -66,10 +45,10 @@ const GlobeGL = ({ center, dim }) => {
         labelSize={ 1.35 } 
         // labelDotOrientation={ () => 'top' }
         labelText={ city => {
-          const temp = (city.temp)
-          ? ((city.temp > 0) ? ' +' : ' -') + `${Math.round(Math.abs(city.temp))}\u00b0C`
-          : ''
-          return city.name + temp; 
+          const cityTemp = (isCelsius) ? city.temp : convertCtoF(city.temp);
+          const temp = ((city.temp > 0) ? '+' : '-') 
+            + ` ${Math.round(Math.abs(cityTemp))} \u00b0${isCelsius?"C":"F"}`;
+          return city.name + ((city.temp) ? temp : ""); 
         }}
         labelColor={ city => (city.temp) 
           ? (city.temp <= 0) ? '#0ff' : 'orange' 
@@ -83,8 +62,7 @@ const GlobeGL = ({ center, dim }) => {
         }} 
 
         // onLabelClick={ city => handleLabelClick(city) }
-        onLabelClick={ city => setCenterPOV([city.coord.lat, city.coord.lon]) 
-        }
+        onLabelClick={ city => setCenterPOV([city.coord.lat, city.coord.lon]) }
 
       />
     )

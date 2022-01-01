@@ -73,7 +73,13 @@ const CitiesList = ({ cities, setCities }) => {
         // setDelID(cityID);
     }
 
-    useEffect(() => console.log(drgCity), [drgCity])
+    useEffect( () => {
+        const drgIndex = cities.indexOf(city => city.id == drgCity.id);
+        console.log(drgCity);
+        console.log(drgIndex);
+        if (drgCity)
+            console.log(drgCity.id, cities[0].id)
+    }, [drgCity])
     useEffect(() => {
         if (tmpCities && tmpCities.length === cities.length) {
             setCities(tmpCities);
@@ -139,17 +145,17 @@ const CitiesList = ({ cities, setCities }) => {
                 } else {
                     return (
                         <div 
-                            key={i} 
+                            key={i}
                             style={{ height: '.75em', background: 'darkgreen', transition: '.5s ease-out', 
                                 flex: (city !== -1) ? null : '1 1 0' }}
-                            onDrop={ (e) => handleDrop(e, city) }
-                            onDragOver={ (e) => handleDragOver(e, city) }
-                            onDragEnter={ (e) => handleDragEnter(e, city) }
-                            onDragLeave={ (e) => handleDragLeave(e, city) }
+                            onDrop={ (e) => handleDrop(e, i) }
+                            onDragOver={ (e) => handleDragOver(e, i) }
+                            onDragEnter={ (e) => handleDragEnter(e, i) }
+                            onDragLeave={ (e) => handleDragLeave(e, i) }
 
                         >    
                         </div>
-    )
+                        )
                     }
                 }
             )}

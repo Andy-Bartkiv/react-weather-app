@@ -1,13 +1,11 @@
 import cls from './MySwitch.module.css'
 
-const MySwitch = (props) => {
+const MySwitch = ({ isToggled, onToggle }) => {
     return (
-        <input 
-            {...props}
-            // className = {cls.my_switch}
-             
-        >
-        </input>
+        <label className = {cls.toggle_switch}>
+            <input type="checkbox" checked={ isToggled } onChange={ onToggle } />
+            <span className={cls.switch}/>
+        </label>
     )
 }
 

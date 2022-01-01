@@ -1,10 +1,19 @@
 import TimeLocal from "./TimeLocal";
 import MyButton from "./UI/button/MyButton";
 import { Link } from "react-router-dom";
+import convertCtoF from "../utils/convertCtoF";
+import { useContext } from "react";
+import { DataContext } from "../context";
 
 const CityItem = ({ city, deleteCity, getWeather, is3D }) => {
-    const temp = ((city.temp > 0) ? '+' : '-') + ` ${Math.round(Math.abs(city.temp))} \u00b0C`;
+
+    const { isCelsius } = useContext(DataContext);
+
+    const cityTemp = (isCelsius) ? city.temp : convertCtoF(city.temp);
+    const temp = ((city.temp > 0) ? '+' : '-') 
+        + ` ${Math.round(Math.abs(cityTemp))} \u00b0${isCelsius?"C":"F"}`;
     const forecast = [1,2,3,4,5]
+    console.log(convertCtoF(city.temp))
 
     return (
         <div className="city-item">
@@ -15,7 +24,6 @@ const CityItem = ({ city, deleteCity, getWeather, is3D }) => {
                 <div style={{ width:'auto' }}>{city.name}, {city.country}</div>
                 <TimeLocal offset={ city.offset } />
                 <div>{city.temp && temp}</div>
-                {/* <div>{city.weather}</div> */}
                 { city.icon &&
                     <img src={`http://openweathermap.org/img/w/${city.icon}.png`} alt={`${city.weather}`}/>
                 }

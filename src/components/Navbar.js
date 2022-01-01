@@ -13,12 +13,10 @@ const Navbar = () => {
         <ul className='App-navbar'> 
             <li className={(active === '/map') ? 'active' : '' }>
                 { (active === '/map') &&
-                    <MySwitch
-                        name='is3D'
-                        type='checkbox' 
-                        checked= { is3D }
-                        onChange= { (e) => setIs3D(!is3D) }
-                    />
+                    <div style={{ position:'absolute', paddingTop:'.35em' }}>
+                        <MySwitch isToggled= { is3D } onToggle= { () => setIs3D(!is3D) }/>
+                    </div>
+                   
                 }
                 <Link to={ '/map' }>
                 Map

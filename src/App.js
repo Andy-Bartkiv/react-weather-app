@@ -16,7 +16,8 @@ function App() {
     (userData.length > 0) ? userData : [] );
 
   const [min, setMin] = useState(null);
-  const [is3D, setIs3D] = useState(true)
+  const [is3D, setIs3D] = useState(true);
+  const [isCelsius, setIsCelsius] = useState(true);
   const [coord, setCoord] = useState([ 51.51, -0.13 ])
 
   useEffect( () => {
@@ -32,6 +33,7 @@ function App() {
       min, setMin,
       coord, setCoord,
       is3D, setIs3D,
+      isCelsius, setIsCelsius,
     }}>
     <HashRouter>{/* <BrowserRouter> */}
       <div className="App">
