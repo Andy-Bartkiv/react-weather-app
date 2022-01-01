@@ -22,31 +22,32 @@ function App() {
 
   useEffect( () => {
     localStorage.setItem('WeatherApp.MyCities', JSON.stringify(myCities));
-    const res = localStorage.getItem('WeatherApp.MyCities');
+    // const res = localStorage.getItem('WeatherApp.MyCities');
     // console.table(JSON.parse(res));
   }, [myCities])
 
   return (
-    <DataContext.Provider value={{ 
-      fiveCities, setFiveCities, 
-      myCities, setMyCities, 
-      min, setMin,
-      coord, setCoord,
-      is3D, setIs3D,
-      isCelsius, setIsCelsius,
-    }}>
-    <HashRouter>{/* <BrowserRouter> */}
+    // <DataContext.Provider value={{ 
+    //   fiveCities, setFiveCities, 
+    //   myCities, setMyCities, 
+    //   min, setMin,
+    //   coord, setCoord,
+    //   is3D, setIs3D,
+    //   isCelsius, setIsCelsius,
+    // }}>
+    // <HashRouter>{/* <BrowserRouter> */}
       <div className="App">
 
-        <Header />
+        TEST
+        {/* <Header />
 
-        <Navbar />
+        <Navbar /> */}
           
-        <AppRouter />
+        {/* <AppRouter /> */}
         
       </div>
-    </HashRouter>
-    </DataContext.Provider>
+    // </HashRouter>
+    // </DataContext.Provider>
   );
 }
 

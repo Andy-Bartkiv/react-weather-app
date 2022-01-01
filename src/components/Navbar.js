@@ -3,7 +3,7 @@ import '../styles/Navbar.css';
 import { useContext } from "react";
 import { DataContext } from "../context";
 import MySwitch from "./UI/switch/MySwitch";
-import { MdOutlineMap, MdOutlineLanguage} from 'react-icons/md'
+import { MdOutlineMap, MdOutlineLanguage} from 'react-icons/md';
 
 const Navbar = () => {
 
@@ -11,21 +11,25 @@ const Navbar = () => {
     const active = useLocation().pathname;
     
     return (
-        <ul className='App-navbar'> 
+        <ul className='App-navbar'>
+
             <li className={(active === '/map') ? 'active' : '' }>
                 { (active === '/map') &&
                     <div style={{ position:'absolute', paddingTop:'.35em' }}>
                         <MdOutlineMap style={{ color: (is3D) ? 'teal' : 'orange' }}/>
-                        <MySwitch isToggled= { is3D } onToggle= { () => setIs3D(!is3D) }/>
+                        <MySwitch 
+                            isToggled= { is3D } 
+                            onToggle= { () => setIs3D(!is3D) }
+                        />
                         <MdOutlineLanguage style={{ color: (!is3D) ? 'teal' : 'orange'}}/>
-
-                    </div>
-                   
+                    </div>          
                 }
                 <Link to={ '/map' }>
                 Map
             </Link></li>
+
             <li className={(active === '/five-cities') ? 'active' : '' }><Link to={ '/five-cities' }>Five Cties</Link></li>
+           
             <li className={(active === '/my-list') ? 'active' : '' }><Link to={ '/my-list' }>My List</Link></li>
         </ul>
     )

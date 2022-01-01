@@ -8,18 +8,17 @@ const MySwitch = ({ isToggled, onToggle, width, height, prmColor, secColor, bgCo
                 '--prm-color': prmColor, '--sec-color': secColor, '--bg-color': bgColor }}
         >
             <input type="checkbox" checked={ isToggled } onChange={ onToggle } />
-            <span className={cls.switch}></span>
+            <span className={ cls.switch }></span>
         </label>
     )
 }
 
 MySwitch.defaultProps = {
-    backgroundColor: '#282c34',
-    bgColor: '#282c34',
+    width: '2em',
+    height: '1em',
     prmColor: 'teal',
     secColor: 'orange', 
-    width: '2em',
-    height: '1em'
+    bgColor: '#282c34',
 }
 
 export default MySwitch

@@ -4,21 +4,26 @@ import { Link } from "react-router-dom";
 import convertCtoF from "../utils/convertCtoF";
 import { useContext } from "react";
 import { DataContext } from "../context";
+import { MdOutlineMap, MdOutlineLanguage} from 'react-icons/md'
 
-const CityItem = ({ city, deleteCity, getWeather, is3D }) => {
+const CityItem = ({ city, deleteCity, getWeather }) => {
 
-    const { isCelsius } = useContext(DataContext);
+    const { isCelsius, is3D } = useContext(DataContext);
 
     const cityTemp = (isCelsius) ? city.temp : convertCtoF(city.temp);
-    const temp = ((city.temp > 0) ? '+' : '-') 
+    const temp = ((cityTemp > 0) ? '+' : '-') 
         + ` ${Math.round(Math.abs(cityTemp))} \u00b0${isCelsius?"C":"F"}`;
-    const forecast = [1,2,3,4,5]
+    const forecast = [1,2,3,4,5];
 
     return (
         <div className="city-item">
             <div className="city-header">
                 <Link style={{ textDecoration:'none', color: 'teal' }} to={ '/map' }>
-                    <MyButton>{ (is3D) ? 'G' : 'M' }</MyButton>
+                    <MyButton style={{ borderColor: 'transparent', padding: '0' }}>
+                        { (is3D) 
+                            ? <MdOutlineLanguage style={{ height: '1.75em', width: '1.75em' }}/> 
+                            : <MdOutlineMap style={{ height: '1.75em', width: '1.75em' }}/> }
+                    </MyButton>
                 </Link>
                 <div style={{ width:'auto' }}>{city.name}, {city.country}</div>
                 <TimeLocal offset={ city.offset } />

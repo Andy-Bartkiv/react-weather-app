@@ -6,7 +6,7 @@ import { DataContext } from "../context";
 
 const CitiesList = ({ cities, setCities }) => {
 
-    const {setCoord, is3D} = useContext(DataContext);
+    const { setCoord } = useContext(DataContext);
 
     const [delID, setDelID] = useState(null);
     const [activeID, setActiveID] = useState(null);
@@ -68,17 +68,17 @@ const CitiesList = ({ cities, setCities }) => {
     function handleDragStart(e, cityID) {
         console.log('drag START', cityID);
         setDrgCity(cities.find(city => city.id === cityID))
-        setTmpCities(cities.filter( city => city.id !== cityID))
+        // setTmpCities(cities.filter( city => city.id !== cityID))
         // setActiveID(null);
         // setDelID(cityID);
     }
 
     useEffect( () => {
         const drgIndex = cities.indexOf(city => city.id == drgCity.id);
-        console.log(drgCity);
-        console.log(drgIndex);
-        if (drgCity)
-            console.log(drgCity.id, cities[0].id)
+        // console.log(drgCity);
+        // console.log(drgIndex);
+        // if (drgCity)
+        //     console.log(drgCity.id, cities[0].id)
     }, [drgCity])
     useEffect(() => {
         if (tmpCities && tmpCities.length === cities.length) {
@@ -90,26 +90,29 @@ const CitiesList = ({ cities, setCities }) => {
 
     const handleDragEnd = (e, cityID) => {
         console.log('drag END', cityID);
-        setTmpCities([...tmpCities, drgCity]);
+        // setTmpCities([...tmpCities, drgCity]);
     }
     
 
     const handleDragOver = (e, cityID) => {
         e.preventDefault();
-        console.log('drag OVER', cityID);
+        // console.log('drag OVER', cityID);
     } 
     const handleDragEnter = (e, cityID) => {
         console.log('drag Enter', cityID);
-        e.target.style.height = '2.5em';
+        const ind = newArray.findIndex(city => drgCity.id === city.id);
+        console.log(ind, cityID, cityID);
+        if (cityID !== ind+1 && cityID !== ind-1)
+            e.target.style.height = '2.5em';
     } 
     const handleDragLeave = (e, cityID) => {
-        console.log('drag LEAVE', cityID);
-        e.target.style.height = '.5em';
+        // console.log('drag LEAVE', cityID);
+        e.target.style.height = '.75em';
     } 
     const handleDrop = (e, cityID) => {
         e.preventDefault();
         console.log('DROP', cityID);
-        e.target.style.height = '.5em';
+        e.target.style.height = '.75em';
     } 
 
     const newArray = [];
@@ -137,7 +140,6 @@ const CitiesList = ({ cities, setCities }) => {
                             onDragEnd={ (e) => handleDragEnd(e, city.id) }
                         >    
                             <CityItem
-                                is3D={ is3D }
                                 city={ city } 
                                 deleteCity={ deleteCity } 
                                 getWeather={ getWeather } />

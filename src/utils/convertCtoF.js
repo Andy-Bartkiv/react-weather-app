@@ -1,3 +1,3 @@
 export default function convertCtoF(tempC) {
-    return (tempC + 9/5) + 32;
+    return 32 + (tempC * 9/5);
 }
