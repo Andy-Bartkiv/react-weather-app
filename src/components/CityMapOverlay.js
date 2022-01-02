@@ -7,7 +7,7 @@ const CityMapOverlay = ({ city, zoom, setMapCenter, setZoom }) => {
     const { isCelsius } = useContext(DataContext);
 
     const cityTemp = (isCelsius) ? city.temp : convertCtoF(city.temp);
-    const temp = ((city.temp > 0) ? '+' : '-') 
+    const temp = ((cityTemp  > 0) ? '+' : '-') 
         + ` ${Math.round(Math.abs(cityTemp))} \u00b0${isCelsius?"C":"F"}`;
     const fontSize = `max(.5em, ${1 - 1.5/zoom}em)`;
 

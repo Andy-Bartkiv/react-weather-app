@@ -23,18 +23,19 @@ const CitiesList = ({ cities, setCities }) => {
     }
 
     // async ??????
-    async function toggleActive(cityID) {
-        // console.table(cities);
-
+    async function toggleActive(e, cityID) {
         const activeCity = (activeID !== cityID)
             ? cityID
             : null
         setActiveID(activeCity);
+
+                                                                console.log(e.target.style);
+
         if (activeCity) {
             const city = cities.find(city => city.id === cityID);
-            let cityName = city.name;
-            if (city.country) 
-                cityName += `,` + city.country;
+            // let cityName = city.name;
+            // if (city.country) 
+            //     cityName += `,` + city.country;
             // console.log(cityName);
             // const resp = await WeatherService.getForecast(cityName);
             // console.log(resp.data);
@@ -133,7 +134,7 @@ const CitiesList = ({ cities, setCities }) => {
                         <div 
                             key={ city.id } 
                             className={ `city` + clsActive + clsDel } 
-                            onClick={ () => toggleActive(city.id) }
+                            onClick={ (e) => toggleActive(e, city.id) }
                             draggable={true}
                             // onDrag={ (e) => handleDrag(e, city.id) }
                             onDragStart={ (e) => handleDragStart(e, city.id) }

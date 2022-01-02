@@ -1,6 +1,7 @@
 .App-navbar {
     --prm-color: teal;
     --sec-color: orange;
+    font-size: .8em;
     padding: 0 2.5vmin;
     list-style-type: none;
     overflow: hidden;
@@ -12,26 +13,21 @@
   
   .App-navbar li {
     width: 35%;
-    font-size: .75em;
     transition: .25s;
     background-color: #282c34;
     border-radius: .5em;
     border-bottom: .1em solid var(--prm-color);
+    display: flex;
+    align-items: center;
   }
   
   .App-navbar a {
+    flex-grow: 1;
     display: block;
     color: var(--prm-color);
     text-align: center;
-    padding: .25em 1em;
+    padding: .5em 1em;
     text-decoration: none;
-  }
-  
-  .App-navbar div {
-    display: block;
-    color: var(--prm-color);
-    text-align: center;
-    padding: .25em 1em;
   }
   
   li input {
@@ -41,7 +37,6 @@
   }
 
   .App-navbar li:hover:not(.active) { --prm-color: orange; }
-  /* .App-navbar li.active:hover { --prm-color: teal; } */
   
   .App-navbar .active {
     width: 70%;

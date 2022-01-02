@@ -46,7 +46,7 @@ const GlobeGL = ({ center, dim }) => {
         // labelDotOrientation={ () => 'top' }
         labelText={ city => {
           const cityTemp = (isCelsius) ? city.temp : convertCtoF(city.temp);
-          const temp = ((city.temp > 0) ? '+' : '-') 
+          const temp = ((cityTemp > 0) ? '+' : '-') 
             + ` ${Math.round(Math.abs(cityTemp))} \u00b0${isCelsius?"C":"F"}`;
           return city.name + ((city.temp) ? temp : ""); 
         }}

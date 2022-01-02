@@ -18,6 +18,8 @@ const CityItem = ({ city, deleteCity, getWeather }) => {
     return (
         <div className="city-item">
             <div className="city-header">
+
+                <div className="city_btns">
                 <Link style={{ textDecoration:'none', color: 'teal' }} to={ '/map' }>
                     <MyButton style={{ borderColor: 'transparent', padding: '0' }}>
                         { (is3D) 
@@ -25,12 +27,17 @@ const CityItem = ({ city, deleteCity, getWeather }) => {
                             : <MdOutlineMap style={{ height: '1.75em', width: '1.75em' }}/> }
                     </MyButton>
                 </Link>
+                </div>
+
                 <div style={{ width:'auto' }}>{city.name}, {city.country}</div>
+
                 <TimeLocal offset={ city.offset } />
+
                 <div>{city.temp && temp}</div>
                 { city.icon &&
-                    <img src={`http://openweathermap.org/img/w/${city.icon}.png`} alt={`${city.weather}`}/>
+                    <img src={`https://openweathermap.org/img/w/${city.icon}.png`} alt={`${city.weather}`}/>
                 }
+
                 <div className="city_btns">
                     <MyButton 
                         onClick={ (event) => getWeather(city.id, event) } 
@@ -44,8 +51,8 @@ const CityItem = ({ city, deleteCity, getWeather }) => {
                     </MyButton>
                 </div>
             </div>
-            <hr/>
             <div className="city-body">
+                <hr/>
                 { forecast.map((day, i) => 
                     <div className="forecast-day" key={i}>
                         {day}

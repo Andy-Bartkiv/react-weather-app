@@ -15,7 +15,7 @@ const Navbar = () => {
 
             <li className={(active === '/map') ? 'active' : '' }>
                 { (active === '/map') &&
-                    <div style={{ position:'absolute', paddingTop:'.35em' }}>
+                    <div style={{ paddingLeft: '.5em' }}>
                         <MdOutlineMap style={{ color: (is3D) ? 'teal' : 'orange' }}/>
                         <MySwitch 
                             isToggled= { is3D } 
@@ -25,7 +25,7 @@ const Navbar = () => {
                     </div>          
                 }
                 <Link to={ '/map' }>
-                Map
+                <div>Map</div>
             </Link></li>
 
             <li className={(active === '/five-cities') ? 'active' : '' }><Link to={ '/five-cities' }>Five Cties</Link></li>
