@@ -15,7 +15,7 @@ const Navbar = () => {
 
             <li className={(active === '/map') ? 'active' : '' }>
                 { (active === '/map') &&
-                    <div style={{ paddingLeft: '.5em' }}>
+                    <div style={{ padding: '.2em 0 0 .5em' }}>
                         <MdOutlineMap style={{ color: (is3D) ? 'teal' : 'orange' }}/>
                         <MySwitch 
                             isToggled= { is3D } 

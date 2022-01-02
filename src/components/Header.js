@@ -11,7 +11,7 @@ const Header = () => {
     return (
         <div className='App-header'>
         
-            <div style={{ width:'25%', padding:'0 .5em', display:'flex', alignItems:'center', fontSize: '.85em' }}>
+            <div style={{ width:'20%', fontSize:'.85em', padding:'0 .5em', display:'flex', alignItems:'center' }}>
                 <RiFahrenheitLine style={{ color: (isCelsius) ? 'teal' : 'orange'}} />
                 <MySwitch isToggled={ isCelsius } onToggle={ () => setIsCelsius(!isCelsius) }/>
                 <RiCelsiusLine style={{ color: (!isCelsius) ? 'teal' : 'orange'}}/>
@@ -19,7 +19,7 @@ const Header = () => {
             
             <h2>Andy's Weather</h2>
 
-            <div style={{ width:'25%', display:'flex', alignItems:'center', fontSize: '.85em' }}>
+            <div style={{ width:'20%', fontSize:'.85em', display:'flex', justifyContent:'flex-end', alignItems:'center' }}>
                 <Clock/>
             </div>
         

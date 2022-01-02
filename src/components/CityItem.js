@@ -4,7 +4,9 @@ import { Link } from "react-router-dom";
 import convertCtoF from "../utils/convertCtoF";
 import { useContext } from "react";
 import { DataContext } from "../context";
-import { MdOutlineMap, MdOutlineLanguage} from 'react-icons/md'
+import { MdOutlineMap, MdOutlineLanguage, MdDeleteForever } from 'react-icons/md'
+import { FaCloudSunRain } from 'react-icons/fa'
+
 
 const CityItem = ({ city, deleteCity, getWeather }) => {
 
@@ -39,20 +41,23 @@ const CityItem = ({ city, deleteCity, getWeather }) => {
                 }
 
                 <div className="city_btns">
+
                     <MyButton 
                         onClick={ (event) => getWeather(city.id, event) } 
-                        style={{ padding: '.25em .5em' }}>
-                        W
+                        style={{ borderColor: 'transparent', padding: '0' }}>
+                        <FaCloudSunRain style={{ height: '1.75em', width: '1.75em' }}/>
                     </MyButton>
+
                     <MyButton 
                         onClick={ (event) => deleteCity(city.id, event) } 
-                        style={{ padding: '.25em .5em' }}>
-                        X
+                        style={{ borderColor: 'transparent', padding: '0' }}>
+                        <MdDeleteForever style={{ height: '1.75em', width: '1.75em' }}/>
                     </MyButton>
                 </div>
             </div>
+            
             <div className="city-body">
-                <hr/>
+{/* <hr/> */}
                 { forecast.map((day, i) => 
                     <div className="forecast-day" key={i}>
                         {day}

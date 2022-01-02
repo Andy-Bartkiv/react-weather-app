@@ -18,7 +18,7 @@ function App() {
   const [min, setMin] = useState(null);
   const [is3D, setIs3D] = useState(true);
   const [isCelsius, setIsCelsius] = useState(true);
-  const [coord, setCoord] = useState([ 51.51, -0.13 ])
+  const [coord, setCoord] = useState([ 34, 35 ])
 
   useEffect( () => {
     localStorage.setItem('WeatherApp.MyCities', JSON.stringify(myCities));

@@ -102,7 +102,7 @@ hr {
   cursor: pointer;
 }
 
-.city.active { height: 9em; }
+/* .city.active { height: 9em; } */
 
 .city.delete { height: 0; padding-top: 0; padding-bottom: 0; transform: scale(.25); opacity: .25; border: none }
 
