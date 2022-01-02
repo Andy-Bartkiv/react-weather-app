@@ -5,7 +5,7 @@ import CityMapOverlay from "./CityMapOverlay"
 
 const PigeonMap = ({ center }) => {
 
-    const {fiveCities, myCities} = useContext(DataContext);
+    const { fiveCities, myCities } = useContext(DataContext);
     const [mapCenter, setMapCenter] = useState(center)
     const [zoom, setZoom] = useState(5);
 
@@ -17,7 +17,6 @@ const PigeonMap = ({ center }) => {
 
     return (
         <Map 
-            // defaultCenter={ center } 
             defaultZoom={ 5 }
             center={ mapCenter }
             zoom={ zoom }
@@ -27,23 +26,18 @@ const PigeonMap = ({ center }) => {
             }}
         >
             <ZoomControl
-                style={{left:'auto', right: '.5em', top: '.5em'}} 
-                buttonStyle={{ background: '#282c44aa', color: 'orange'}}/>
-            { allCities.map(city => {
-                // console.log(city)
-                return (
-                    <Overlay key={city.id} anchor={ [city.coord.lat, city.coord.lon] }>
-                        <CityMapOverlay 
-                            city={ city } 
-                            zoom={ zoom } 
-                            setMapCenter={ setMapCenter } 
-                            setZoom={ setZoom }/>
-                    </Overlay>
-                )
-            }
+                style={{ left:'auto', right: '.5em', top: '.5em' }} 
+                buttonStyle={{ background: '#282c44aa', color: 'orange' }}/>
 
+            { allCities.map( city => 
+                <Overlay key={city.id} anchor={ [city.coord.lat, city.coord.lon] }>
+                    <CityMapOverlay 
+                        city={ city } 
+                        zoom={ zoom } 
+                        setMapCenter={ setMapCenter } 
+                        setZoom={ setZoom }/>
+                </Overlay>
             )}
-
 
         </Map>
     )

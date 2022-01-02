@@ -6,41 +6,40 @@ import { DataContext } from "../context";
 
 const CitiesList = ({ cities, setCities }) => {
 
-    const { setCoord } = useContext(DataContext);
+    const { activeCity, setActiveCity } = useContext(DataContext);
 
     const [delID, setDelID] = useState(null);
-    const [activeID, setActiveID] = useState(null);
     const [drgCity, setDrgCity] = useState(null);
     const [tmpCities, setTmpCities] = useState(null);
 
     function deleteCity(cityID, event) {
         event.stopPropagation();
         setDelID(cityID);
+        setActiveCity(null);
         setTimeout( () => {
             setCities(cities.filter( city => city.id !== cityID))
             setDelID(null);
-        }, 500); // timeout for Delete City animation
+        }, 500); // timeout for Delete City animation = should match with CSS param
     }
 
     // async ??????
-    async function toggleActive(e, cityID) {
-        const activeCity = (activeID !== cityID)
-            ? cityID
-            : null
-        setActiveID(activeCity);
+    function toggleActive(e, cityID) {
+        const currentActiveCity = (activeCity && activeCity.id === cityID)
+            ? null
+            : cities.find( city => city.id === cityID )
+        setActiveCity(currentActiveCity);
 
-                                                                console.log(e.target.style);
+                                                // console.log(e.target.style);
 
-        if (activeCity) {
-            const city = cities.find(city => city.id === cityID);
+        // if (activeCity) {
+            // const city = cities.find(city => city.id === cityID);
             // let cityName = city.name;
             // if (city.country) 
             //     cityName += `,` + city.country;
             // console.log(cityName);
             // const resp = await WeatherService.getForecast(cityName);
             // console.log(resp.data);
-            setCoord([city.coord.lat, city.coord.lon])
-        }
+        // }
     }
 
     async function getWeather(cityID, event) {
@@ -128,7 +127,7 @@ const CitiesList = ({ cities, setCities }) => {
         <div className="city-list">
             { newArray.map( (city, i) => {
                 if (i % 2 !== 0) {
-                    const clsActive = (activeID === city.id) ? ' active' : '';
+                    const clsActive = (activeCity && activeCity.id === city.id) ? ' active' : '';
                     const clsDel = (delID === city.id) ? ' delete' : '';
                     return (
                         <div 

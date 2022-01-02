@@ -18,7 +18,7 @@ function App() {
   const [min, setMin] = useState(null);
   const [is3D, setIs3D] = useState(true);
   const [isCelsius, setIsCelsius] = useState(true);
-  const [coord, setCoord] = useState([ 34, 35 ])
+  const [activeCity, setActiveCity] = useState(FIVE_CITIES[0]);
 
   useEffect( () => {
     localStorage.setItem('WeatherApp.MyCities', JSON.stringify(myCities));
@@ -28,12 +28,12 @@ function App() {
 
   return (
     <DataContext.Provider value={{ 
-      fiveCities, setFiveCities, 
-      myCities, setMyCities, 
-      min, setMin,
-      coord, setCoord,
-      is3D, setIs3D,
-      isCelsius, setIsCelsius,
+      fiveCities, setFiveCities, // initial 5 cities list
+      myCities, setMyCities,    // custom added cities list
+      min, setMin,              // minutes for local time sync
+      activeCity, setActiveCity,// active City
+      is3D, setIs3D,            // 3D-Globe or 2D-Map selector 
+      isCelsius, setIsCelsius,  // Celsius or Fahrenheit grad selector
     }}>
     <HashRouter>{/* <BrowserRouter> */}
       <div className="App">

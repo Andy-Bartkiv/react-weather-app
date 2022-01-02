@@ -5,9 +5,12 @@ import GlobeGL from "../components/GlobeGL";
 // import ComponentWithDimensions from "../components/CWD";
 
 const Map = () => {
-  const { coord, is3D } = useContext(DataContext);
+  const { activeCity, is3D } = useContext(DataContext);
   const targetRef = useRef();
   const [dim, setDim] = useState({ width:0, height: 0 });
+  const coord = (activeCity)
+    ? [activeCity.coord.lat, activeCity.coord.lon]
+    : [ 34, 35 ]
   useLayoutEffect( () => {
     if (targetRef.current) {
       setDim({
@@ -19,8 +22,6 @@ const Map = () => {
 
   return (
     <div ref={targetRef} className="App-body" style={{ padding: (is3D) && '0'}}>
-      {/* style={{ margin: (is3D) ? '0 auto' : '0'}} */}
-    {/* <ComponentWithDimensions/> */}
       { (is3D)
         ? <GlobeGL center={ coord } dim={ dim }/>
         : <PigeonMap center={ coord }/>
