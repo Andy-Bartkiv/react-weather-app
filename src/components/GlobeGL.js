@@ -43,17 +43,19 @@ const GlobeGL = ({ center, dim }) => {
         labelLng={ city => city.coord.lon}
         labelDotRadius={ .5 }
         labelSize={ 1.35 } 
-        // labelDotOrientation={ () => 'top' }
+        
         labelText={ city => {
           const cityTemp = (isCelsius) ? city.temp : convertCtoF(city.temp);
           const temp = ((cityTemp > 0) ? '+' : '-') 
             + ` ${Math.round(Math.abs(cityTemp))} \u00b0${isCelsius?"C":"F"}`;
           return city.name + ((city.temp) ? temp : ""); 
         }}
+
         labelColor={ city => (city.temp) 
           ? (city.temp <= 0) ? '#0ff' : 'orange' 
           : 'whitesmoke'
         }
+
         labelLabel={ city => {
           if (city.icon) 
             return (
@@ -61,7 +63,6 @@ const GlobeGL = ({ center, dim }) => {
                 src="https://openweathermap.org/img/w/${city.icon}.png"/>`)
         }} 
 
-        // onLabelClick={ city => handleLabelClick(city) }
         onLabelClick={ city => setCenterPOV([city.coord.lat, city.coord.lon]) }
 
       />

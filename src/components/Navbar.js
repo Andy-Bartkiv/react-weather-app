@@ -12,7 +12,7 @@ const Navbar = () => {
     
     return (
         <ul className='App-navbar'>
-
+        {/* MAP tab */}
             <li className={(active === '/map') ? 'active' : '' }>
                 { (active === '/map') &&
                     <div style={{ padding: '.2em 0 0 .5em' }}>
@@ -24,12 +24,11 @@ const Navbar = () => {
                         <MdOutlineLanguage style={{ color: (!is3D) ? 'teal' : 'orange'}}/>
                     </div>          
                 }
-                <Link to={ '/map' }>
-                <div>Map</div>
-            </Link></li>
-
+                <Link to={ '/map' }> <div>Map</div> </Link>
+            </li>
+        {/* FIVE CITIES tab */}
             <li className={(active === '/five-cities') ? 'active' : '' }><Link to={ '/five-cities' }>Five Cties</Link></li>
-           
+        {/* MY LIST tab */}
             <li className={(active === '/my-list') ? 'active' : '' }><Link to={ '/my-list' }>My List</Link></li>
         </ul>
     )

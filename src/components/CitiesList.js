@@ -19,7 +19,7 @@ const CitiesList = ({ cities, setCities }) => {
         setTimeout( () => {
             setCities(cities.filter( city => city.id !== cityID))
             setDelID(null);
-        }, 500); // timeout for Delete City animation = should match with CSS param
+        }, 250); // timeout for Delete City animation = should match with CSS param
     }
 
     // async ??????
@@ -31,7 +31,8 @@ const CitiesList = ({ cities, setCities }) => {
 
                                                 // console.log(e.target.style);
 
-        // if (activeCity) {
+        if (activeCity) {
+            console.log(activeCity)
             // const city = cities.find(city => city.id === cityID);
             // let cityName = city.name;
             // if (city.country) 
@@ -39,7 +40,7 @@ const CitiesList = ({ cities, setCities }) => {
             // console.log(cityName);
             // const resp = await WeatherService.getForecast(cityName);
             // console.log(resp.data);
-        // }
+        }
     }
 
     async function getWeather(cityID, event) {
@@ -58,7 +59,6 @@ const CitiesList = ({ cities, setCities }) => {
         )
         setCities(newCities);
         console.table(newCities)
-        // navigator.geolocation.getCurrentPosition((pos) => console.log(pos))
       }
     
     //   - - - - DRAG HANDLERS 
@@ -148,8 +148,10 @@ const CitiesList = ({ cities, setCities }) => {
                     return (
                         <div 
                             key={i}
-                            style={{ height: '.75em', background: 'darkgreen', transition: '.5s ease-out', 
-                                flex: (city !== -1) ? null : '1 1 0' }}
+                            style={{ height: '.75em', 
+                                    // background: 'darkgreen', 
+                                    transition: '.5s ease-out', 
+                                    flex: (city !== -1) ? null : '1 1 0' }}
                             onDrop={ (e) => handleDrop(e, i) }
                             onDragOver={ (e) => handleDragOver(e, i) }
                             onDragEnter={ (e) => handleDragEnter(e, i) }

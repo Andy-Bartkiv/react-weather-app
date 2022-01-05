@@ -4,10 +4,10 @@ import { DataContext } from "../context";
 const TimeLocal = ({ offset=0 }) => {
 
     const { min } = useContext(DataContext);
-    const currentTime = new Date(Date.now() + (offset*1000))
-    const [time, setTime] = useState(currentTime)
+    const currentTime = new Date(Date.now() + (offset*1000));
+    const [time, setTime] = useState(currentTime);
 
-    useEffect( () => setTime(new Date(Date.now() + (offset*1000))), [min])
+    useEffect( () => setTime(new Date(Date.now() + (offset*1000))), [min]);
 
     return (
         <div>

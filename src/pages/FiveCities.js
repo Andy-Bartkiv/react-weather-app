@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { DataContext } from "../context";
 
 
-const Default = () => {
+const FiveCities = () => {
   
     const { fiveCities, setFiveCities } = useContext(DataContext);
 
@@ -16,4 +16,4 @@ const Default = () => {
     )
 }
 
-export default Default
+export default FiveCities

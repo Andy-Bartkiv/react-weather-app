@@ -43,10 +43,24 @@ body {
   border-radius: 1em;
 }
 
+.header-switch {
+  width: 20%; 
+  font-size: .85em;
+  padding: 0 .5em;
+  display: flex;
+  align-items: center;
+}
+
 .App-header h2 { font-family: 'Lobster Two', cursive; }
 
-h2, h3, h4 {
-  text-align: center;
+h2, h3, h4 { text-align: center; }
+
+.header-clock {
+  width: 20%;
+  font-size: .85em;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .App-body {
@@ -64,12 +78,21 @@ h2, h3, h4 {
   margin: 0 auto;
   width: 75%;
   height: 2.5em;
+  height: 0;
+  transform: scaleY(0);
   padding: .5em 0;
+  padding: 0;
   display: flex;
   justify-content: center;
   align-items: stretch;
   gap: 1em;
-  transition: .5s;
+  transition: .25s;
+}
+
+.new-city-form.show {
+  height: 2.5em;
+  padding: .5em 0;
+  transform: scaleY(1);
 }
 
 .new-city-form button { font-family: 'Lobster Two', cursive; }
@@ -78,6 +101,7 @@ h2, h3, h4 {
   height: 100%;
   display: flex;
   flex-direction: column;
+  font-size: .85em;
   /* margin-top: .5em; */
   /* gap: .5em; */
 }
@@ -97,12 +121,19 @@ hr {
   border: 0.1em solid var(--sec-color);
   border-radius: .25em;
   /* font-size: smaller; */
-  font-size: .85em;
-  transition: .5s ease-in;
+  font-size: min(1em, 3vw);
+  transition: all .25s ease-in
+    /* , height .5s ease-in */
+    ;
   cursor: pointer;
+  background: var(--bg2-color);
 }
 
-/* .city.active { height: 9em; } */
+.city.active { 
+  /* height: 9em;  */
+  background: var(--bg1-color);
+  border-color: var(--prm-color);
+}
 
 .city.delete { height: 0; padding-top: 0; padding-bottom: 0; transform: scale(.25); opacity: .25; border: none }
 
@@ -120,6 +151,7 @@ hr {
   /* filter: grayscale(.25); */
 }
 
+/* weather icon for Globe */
 .img-weather {
   position: absolute;
   top: -8.5vh; left: -5vw;
@@ -143,27 +175,49 @@ hr {
 .city-body {
   /* border: 1px solid red; */
   width: 100%;
-  height: 0%;
   display: none;
-  font-size: 0;
-  justify-content: space-around;
-  align-items: center;
-  transition: .5s;
+  /* height: 0%; */
 }
 
 .city.active .city-body {
-  display: flex;
-  font-size: 1em;
-  height: 100%;
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: .25em;
+}
+
+.city-body > * {
+  border: 1px solid red;
+}
+
+.city-data-major {
+  grid-row: 1/3;
+  background: var(--bg2-color);
+}
+
+.city-forecast {
+  display: grid;
+  grid-template-columns: repeat(5, auto);
+  gap: .25em;
 }
 
 .forecast-day {
-  /* width: 100%; */
-  flex: .19;
-  height: 100%;
-  border: .05em solid var(--sec-color);
-  border-radius: .5em;
   padding: 0.25em;
+  border-radius: .5em;
+  border: .05em solid var(--sec-color);
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: .25em;
+  row-gap: .35em;
+  justify-items: center;
+  align-content: space-between;
+}
+
+.forecast-day > *{
+  /* BORDER: 1PX solid green; */
+}
+
+.forecast-day-title {
+  grid-column: 1/3;
 }
 
 .city_btns {

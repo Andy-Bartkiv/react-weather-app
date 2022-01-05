@@ -10,11 +10,8 @@ import AppRouter from './components/AppRouter';
 function App() {
    
   const [fiveCities, setFiveCities] = useState(FIVE_CITIES);
-  
   const userData = JSON.parse(localStorage.getItem('WeatherApp.MyCities'));  
-  const [myCities, setMyCities] = useState( 
-    (userData) ? userData : [] );
-
+  const [myCities, setMyCities] = useState( (userData) ? userData : [] );
   const [min, setMin] = useState(null);
   const [is3D, setIs3D] = useState(true);
   const [isCelsius, setIsCelsius] = useState(true);
@@ -22,13 +19,11 @@ function App() {
 
   useEffect( () => {
     localStorage.setItem('WeatherApp.MyCities', JSON.stringify(myCities));
-    // const res = localStorage.getItem('WeatherApp.MyCities');
-    // console.table(JSON.parse(res));
   }, [myCities])
 
   return (
     <DataContext.Provider value={{ 
-      fiveCities, setFiveCities, // initial 5 cities list
+      fiveCities, setFiveCities,// initial 5 cities list
       myCities, setMyCities,    // custom added cities list
       min, setMin,              // minutes for local time sync
       activeCity, setActiveCity,// active City
