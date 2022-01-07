@@ -1,14 +1,19 @@
 export default function processWeatherData(resp) {
-    const dataObj = {
-        id: resp.data.id,
-        name: resp.data.name,
-        country: resp.data.sys.country,
-        coord: { lon: resp.data.coord.lon, lat: resp.data.coord.lat },
-        offset: resp.data.timezone,
+    const city = resp.data;
+    const cityObj = {
+        id: city.id,
+        name: city.name,
+        country: city.sys.country,
+        coord: city.coord,
+        offset: city.timezone,
 
-        temp: resp.data.main.temp,
-        weather: resp.data.weather[0].main,
-        icon: resp.data.weather[0].icon,
+        temp: city.main.temp,
+        weather: city.weather[0].main,
+        icon: city.weather[0].icon,
+
+        humidity: city.main.humidity,
+        pressure: (city.main.grnd_level) ? city.main.grnd_level : city.main.pressure,
+        wind: city.wind,
     }
-    return dataObj;
+    return cityObj;
 }

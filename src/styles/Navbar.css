@@ -14,7 +14,7 @@
   .App-navbar li {
     width: 35%;
     transition: .25s;
-    background-color: #282c34;
+    background-color: #24282d;
     border-radius: .5em;
     border-bottom: .1em solid var(--prm-color);
     display: flex;

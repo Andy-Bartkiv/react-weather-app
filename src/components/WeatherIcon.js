@@ -1,12 +1,13 @@
+import Loader from "./UI/loader/Loader"
 
-const WeatherIcon = ({ icon  }) => {
+const WeatherIcon = ({ icon }) => {
     return (
-        <>
-            { icon && 
-                <img 
-                    src={`https://openweathermap.org/img/w/${icon}.png`}
-                /> }   
-        </>
+        <div>
+            { (icon) 
+                ? <img src={`https://openweathermap.org/img/w/${icon}.png`} />
+                : <Loader/> 
+            }   
+        </div>
     )
 }
 

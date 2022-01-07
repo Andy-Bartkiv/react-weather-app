@@ -46,13 +46,13 @@ const GlobeGL = ({ center, dim }) => {
         
         labelText={ city => {
           const cityTemp = (isCelsius) ? city.temp : convertCtoF(city.temp);
-          const temp = ((cityTemp > 0) ? '+' : '-') 
-            + ` ${Math.round(Math.abs(cityTemp))} \u00b0${isCelsius?"C":"F"}`;
+          const temp = ((cityTemp > 0) ? ' +' : ' -') 
+            + `${Math.round(Math.abs(cityTemp))}\u00b0${isCelsius?"C":"F"}`;
           return city.name + ((city.temp) ? temp : ""); 
         }}
 
         labelColor={ city => (city.temp) 
-          ? (city.temp <= 0) ? '#0ff' : 'orange' 
+          ? (city.temp <= 0) ? '#0ff' : '#fd0' 
           : 'whitesmoke'
         }
 
