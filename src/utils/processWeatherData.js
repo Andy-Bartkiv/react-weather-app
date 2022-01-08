@@ -7,6 +7,7 @@ export default function processWeatherData(resp) {
         coord: city.coord,
         offset: city.timezone,
 
+        dt: city.dt,
         temp: city.main.temp,
         weather: city.weather[0].main,
         icon: city.weather[0].icon,

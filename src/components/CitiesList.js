@@ -7,17 +7,22 @@ import { DataContext } from "../context";
 
 const CitiesList = ({ cities, setCities }) => {
 
-    const { activeCity, setActiveCity, first, setFirst } = useContext(DataContext);
+    const API_LIMIT = 30; // 60
+    const delayRefresh = () => 60 * (Math.floor(Math.random() * 15) + 60);
+
+    const { min, 
+        first, setFirst,
+        apiReq, setApiReq, 
+        activeCity, setActiveCity, 
+        } = useContext(DataContext);
 
     const [delID, setDelID] = useState(null);
     const [drgCity, setDrgCity] = useState(null);
     const [tmpCities, setTmpCities] = useState(null);
+    
+    useEffect( () => getAllWeather(cities), []);
 
-    useEffect( () => {
-        if (first) {
-            getForecast(activeCity.id);
-            setFirst(false);
-    }}, [])
+    useEffect( () => setApiReq(0), [min]);
 
     function deleteCity(event, cityID) {
         event.stopPropagation();
@@ -32,40 +37,84 @@ const CitiesList = ({ cities, setCities }) => {
     function toggleActive(cityID) {
         let currentActiveCity = null;
         if (!activeCity || activeCity.id !== cityID) {
-            getForecast(cityID);
             currentActiveCity = cities.find( city => city.id === cityID );
+            if (!currentActiveCity.forecast || Date.now()/1000 > currentActiveCity.forecast[0].dt) {
+                getForecast(cityID);
+            }
         }
         setActiveCity(currentActiveCity);
     }
 
-    async function getWeather(event, cityID) {
-        event.stopPropagation();
-
-        const city = cities.find(city => city.id === cityID);
-        let cityName = city.name;
-        if (city.country) 
-            cityName += `,` + city.country;
-        const resp = await WeatherService.getWeather(cityName);
-        // console.log(resp.data);
-        const cityData = processWeatherData(resp);
-        const newCities = [...cities].map(city => 
-            (city.id === cityID) ? {...city, ...cityData} : city )
+    async function getAllWeather(cities) {
+        // console.log('getAllWeather', delayRefresh());
+        const newCities = [];
+        for (let city of cities) {
+            const dt = (city.dt) ? city.dt : 0;
+            if (Date.now()/1000 - dt < delayRefresh()) {
+                newCities.push({...city});
+                continue;
+            }
+            if ( apiReq < API_LIMIT ) {
+                console.log('- - - - - getting weather for', city.name)
+                setApiReq(apiReq+1);
+                let cityName = city.name;
+                if (city.country) 
+                    cityName += `,` + city.country;    
+                const resp = await WeatherService.getWeather(cityName);
+                const cityData = processWeatherData(resp);
+                let cityForecast = null;
+                if (first) {
+                    setFirst(false);
+                    const resp2 = await WeatherService.getForecast(cityName);
+                    cityForecast = processForecastData(resp2);
+                }
+                newCities.push({...city, ...cityData, ...cityForecast});
+            } else {
+                alert(`${apiReq}: Too much API requests per minute. Try again later.`);
+                newCities.push({...city});
+            }
+        }
         setCities(newCities);
-        // console.table(newCities);
-        // console.log(cityData)
     }
+
+    // async function getWeather(cityID) {
+    //     // event.stopPropagation();
+    //     const city = cities.find(city => city.id === cityID);
+    //     const dt = (city.dt) ? city.dt : 0;
+    //     if (Date.now()/1000 - dt < 3600) 
+    //         return
+    //     if ( apiReq < API_LIMIT ) {
+    //         console.log('- - - - - getting weather')
+    //         setApiReq(apiReq+1);
+    //         let cityName = city.name;
+    //         if (city.country) 
+    //             cityName += `,` + city.country;    
+    //         const resp = await WeatherService.getWeather(cityName);
+    //         // console.log(resp.data);
+    //         const cityData = processWeatherData(resp);
+    //         const newCities = [...cities].map(city => 
+    //             (city.id === cityID) ? {...city, ...cityData} : city )
+    //         setCities(newCities);
+    //     } else {
+    //         alert(`${apiReq}: Too much API requests per minute. Try again later.`)
+    //     }
+    // }
     
     async function getForecast(cityID) {
         const city = cities.find(city => city.id === cityID);
         let cityName = city.name;
         if (city.country) 
             cityName += `,` + city.country;
-        const resp = await WeatherService.getForecast(cityName);
-        const cityForecast = processForecastData(resp);
-        const newCities = [...cities].map(city => 
-          (city.id === cityID) ? {...city, ...cityForecast} : city 
-        )
-        setCities(newCities);
+        if (apiReq < API_LIMIT) {
+            setApiReq(apiReq+1);
+            const resp = await WeatherService.getForecast(cityName);
+            const cityForecast = processForecastData(resp);
+            const newCities = [...cities].map(city => 
+                (city.id === cityID) ? {...city, ...cityForecast} : city)
+            setCities(newCities);
+        } else {
+            alert(`${apiReq}: Too much API requests per minute. Try again later.`)
+        }
     }
     
     return (
@@ -81,7 +130,6 @@ const CitiesList = ({ cities, setCities }) => {
                         <CityItem
                             city={ city } 
                             deleteCity={ deleteCity } 
-                            getWeather={ getWeather }
                         />
                     </div>
                 )

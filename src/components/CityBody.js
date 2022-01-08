@@ -1,4 +1,3 @@
-import TimeLocal from "./TimeLocal";
 import WeatherIcon from "./WeatherIcon";
 import nth from "../utils/nth"
 import WeatherWind from "./WeatherWind";
@@ -9,10 +8,8 @@ import ForecastDay from "./ForecastDay";
 import Loader from "./UI/loader/Loader";
 
 const CityBody = ({ city }) => {
+
     const currentTime = new Date(Date.now() + (city.offset*1000));
-    console.log(city.name, city.offset)
-    console.log(currentTime.getUTCDate())
-    console.log(new Date().toLocaleString())
     
     return (
         <div className="city-body">
@@ -39,9 +36,12 @@ const CityBody = ({ city }) => {
             </div>
 
             <div className="city-data-minor">                     
-                <TimeLocal offset={ city.offset } />
-                {currentTime.toLocaleDateString('en-US', { timeZone: "UTC", weekday: 'long', month: 'long', day: 'numeric' })} 
-                {nth(currentTime.getUTCDate())}
+                { currentTime.toLocaleString('en-GB'
+                    , { timeZone: "UTC", hour: '2-digit', minute: '2-digit' }) }
+                &nbsp;&nbsp;&nbsp; 
+                { currentTime.toLocaleDateString('en-US'
+                    , { timeZone: "UTC", weekday: 'long', month: 'long', day: 'numeric' }) } 
+                { nth(currentTime.getUTCDate()) }
             </div>
 
             <div className="city-forecast">

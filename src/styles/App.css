@@ -197,7 +197,6 @@ hr {
 
 .city-data-minor {
   display: flex;
-  gap: .5em;
   padding-left: .25em;
   margin-right: 1.75em;
 }
