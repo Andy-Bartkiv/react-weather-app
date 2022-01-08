@@ -2,18 +2,24 @@ import WeatherService from "../API/WeatherService";
 import processWeatherData from "../utils/processWeatherData";
 import processForecastData from "../utils/processForecastData";
 import CityItem from "./CityItem";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { DataContext } from "../context";
 
 const CitiesList = ({ cities, setCities }) => {
 
-    const { activeCity, setActiveCity } = useContext(DataContext);
+    const { activeCity, setActiveCity, first, setFirst } = useContext(DataContext);
 
     const [delID, setDelID] = useState(null);
     const [drgCity, setDrgCity] = useState(null);
     const [tmpCities, setTmpCities] = useState(null);
 
-    function deleteCity(cityID, event) {
+    useEffect( () => {
+        if (first) {
+            getForecast(activeCity.id);
+            setFirst(false);
+    }}, [])
+
+    function deleteCity(event, cityID) {
         event.stopPropagation();
         setDelID(cityID);
         setActiveCity(null);
@@ -23,11 +29,12 @@ const CitiesList = ({ cities, setCities }) => {
         }, 250); // timeout for Delete City animation = should match with CSS param
     }
 
-    // async ??????
-    function toggleActive(e, cityID) {
-        const currentActiveCity = (activeCity && activeCity.id === cityID)
-            ? null
-            : cities.find( city => city.id === cityID )
+    function toggleActive(cityID) {
+        let currentActiveCity = null;
+        if (!activeCity || activeCity.id !== cityID) {
+            getForecast(cityID);
+            currentActiveCity = cities.find( city => city.id === cityID );
+        }
         setActiveCity(currentActiveCity);
     }
 
@@ -39,33 +46,26 @@ const CitiesList = ({ cities, setCities }) => {
         if (city.country) 
             cityName += `,` + city.country;
         const resp = await WeatherService.getWeather(cityName);
-        console.log(resp.data);
-    
+        // console.log(resp.data);
         const cityData = processWeatherData(resp);
         const newCities = [...cities].map(city => 
             (city.id === cityID) ? {...city, ...cityData} : city )
         setCities(newCities);
         // console.table(newCities);
-        console.log(cityData)
+        // console.log(cityData)
     }
     
-    async function getForecast(event, cityID) {
+    async function getForecast(cityID) {
         const city = cities.find(city => city.id === cityID);
         let cityName = city.name;
         if (city.country) 
             cityName += `,` + city.country;
-        console.log(cityName);
         const resp = await WeatherService.getForecast(cityName);
-        // console.log(resp.data.city.name, resp.data.list);
         const cityForecast = processForecastData(resp);
-        console.log(cityForecast);
         const newCities = [...cities].map(city => 
           (city.id === cityID) ? {...city, ...cityForecast} : city 
         )
         setCities(newCities);
-        console.table(newCities);
-        
-        // list..map(e => e.dt_txt.slice(11,13))
     }
     
     return (
@@ -76,13 +76,12 @@ const CitiesList = ({ cities, setCities }) => {
                 return (
                     <div key={ city.id } 
                         className={ `city` + clsActive + clsDel } 
-                        onClick={ (e) => toggleActive(e, city.id) }
+                        onClick={ () => toggleActive(city.id) }
                     >    
                         <CityItem
                             city={ city } 
                             deleteCity={ deleteCity } 
                             getWeather={ getWeather }
-                            // getForecast= { getForecast} 
                         />
                     </div>
                 )

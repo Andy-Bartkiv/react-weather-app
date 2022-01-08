@@ -9,9 +9,12 @@ const CityItem = ({ city, deleteCity, getWeather }) => {
     return (
         <div className="city-item">
 
-            <GlobeMapBtn city={ city } />
-            <DeleteBtn city={ city } deleteCity={ deleteCity } />
-            <GetWeatherBtn city={ city } getWeather={ getWeather } />
+            <GlobeMapBtn 
+                city={ city } />
+            <DeleteBtn 
+                id={ city.id } deleteCity={ deleteCity } />
+            <GetWeatherBtn 
+                id={ city.id } getWeather={ getWeather } />
 
             <CityHeader city={ city } />
          

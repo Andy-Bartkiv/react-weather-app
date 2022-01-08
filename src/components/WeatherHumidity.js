@@ -1,10 +1,11 @@
-import { WiHumidity } from 'react-icons/wi'
+import { WiHumidity } from 'react-icons/wi';
+import Loader from './UI/loader/Loader';
 
 const WeatherHumidity = ({ hum }) => {
     return (
-        <div>
+        <div style={{ display: 'flex', gap: '.25em' }}>
             <WiHumidity style={{ transform: 'scale(1.5)' }}/>
-            { (hum) ? ` ${hum} %` : ''}
+            { (hum) ? ` ${hum} %` : <Loader/>}
         </div>
     )
 }

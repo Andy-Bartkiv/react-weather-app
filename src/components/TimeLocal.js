@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { DataContext } from "../context";
 
-const TimeLocal = ({ offset=0 }) => {
+const TimeLocal = ({ offset = 0 }) => {
 
     const { min } = useContext(DataContext);
     const currentTime = new Date(Date.now() + (offset*1000));

@@ -16,6 +16,7 @@ function App() {
   const [is3D, setIs3D] = useState(true);
   const [isCelsius, setIsCelsius] = useState(true);
   const [activeCity, setActiveCity] = useState(FIVE_CITIES[0]);
+  const [first, setFirst] = useState(true);
 
   useEffect( () => {
     localStorage.setItem('WeatherApp.MyCities', JSON.stringify(myCities));
@@ -29,8 +30,10 @@ function App() {
       activeCity, setActiveCity,// active City
       is3D, setIs3D,            // 3D-Globe or 2D-Map selector 
       isCelsius, setIsCelsius,  // Celsius or Fahrenheit grad selector
+      first, setFirst           // first time App starts
     }}>
-    <HashRouter>{/* <BrowserRouter> */}
+    <HashRouter>
+    {/* <BrowserRouter> */}
       <div className="App">
 
         <Header />
@@ -40,6 +43,7 @@ function App() {
         <AppRouter />
         
       </div>
+    {/* <BrowserRouter> */}
     </HashRouter>
     </DataContext.Provider>
   );

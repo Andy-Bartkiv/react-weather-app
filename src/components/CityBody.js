@@ -1,17 +1,19 @@
 import TimeLocal from "./TimeLocal";
 import WeatherIcon from "./WeatherIcon";
 import nth from "../utils/nth"
-import GlobeMapBtn from "./GlobeMapBtn";
 import WeatherWind from "./WeatherWind";
 import WeatherPressure from "./WeatherPressure";
 import WeatherHumidity from "./WeatherHumidity";
-import WeatherTemp from "./WeatherTemp";
 import WeatherTempIcon from "./WeatherTempIcon";
+import ForecastDay from "./ForecastDay";
+import Loader from "./UI/loader/Loader";
 
 const CityBody = ({ city }) => {
-
-    const forecast = ['Mon, Jan 3','Tue, Jan 4','Wed, Jan 5','Thu, Jan 6','Fri, Jan 7'];
-
+    const currentTime = new Date(Date.now() + (city.offset*1000));
+    console.log(city.name, city.offset)
+    console.log(currentTime.getUTCDate())
+    console.log(new Date().toLocaleString())
+    
     return (
         <div className="city-body">
 
@@ -38,29 +40,15 @@ const CityBody = ({ city }) => {
 
             <div className="city-data-minor">                     
                 <TimeLocal offset={ city.offset } />
-                {new Date().toLocaleDateString('en-US', { weekday: 'long' })}
-                {', '}
-                {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric' })} 
-                {nth(3)}
+                {currentTime.toLocaleDateString('en-US', { timeZone: "UTC", weekday: 'long', month: 'long', day: 'numeric' })} 
+                {nth(currentTime.getUTCDate())}
             </div>
 
             <div className="city-forecast">
-                { forecast.map( (day, i) => {
-                    // console.log(i*8+4, i*8+8, city.id, day, city.forecast);
-                    // if (city.forecast) 
-                    return (<div className="forecast-day" key={i}>
-                        <div className="forecast-day-title">{ day }</div>
-                        <WeatherIcon icon={ city.icon }/>
-                        <WeatherIcon icon={ city.icon }/>
-                        <WeatherTemp tempCelsius={ city.temp }/>
-                        <WeatherTemp tempCelsius={ city.temp }/>
-                    
-                        {/* <WeatherIcon icon={ city.forecast[i*8+4].weather[0].icon }/>
-                        <WeatherIcon icon={ city.forecast[i*8+8].weather[0].icon }/> */}
-                        {/* <WeatherTemp tempCelsius={ city.forecast[i*8+4].main.temp} size=".85em"/>
-                        <WeatherTemp tempCelsius={ city.forecast[i*8+8].main.temp } size=".85em"/> */}
-                    </div>)
-                }
+                { [0,1,2,3,4].map( (i) =>
+                    (city.forecast)
+                    ? <ForecastDay key={ i } city={ city } i={ i }/> 
+                    : <Loader key={ i } />
                 )}
             </div>
     </div>

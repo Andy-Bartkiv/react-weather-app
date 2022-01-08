@@ -11,7 +11,7 @@ const WeatherTempIcon = ({ tempCelsius }) => {
         + `${Math.round(Math.abs(cityTemp))} \u00b0${isCelsius?"C":"F"}`;
 
     return (
-        <div style={{ display: 'flex', marginLeft:'.25em' }}>
+        <div style={{ display: 'flex', marginLeft:'.1em' }}>
             { (cityTemp > 0) ? <BsThermometerSun /> : <BsThermometerSnow /> }
             { tempCelsius ? temp : <Loader/>}
         </div>
