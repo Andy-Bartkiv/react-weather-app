@@ -176,12 +176,8 @@ hr {
   gap: .25em;
 }
 
-.city.active .city-header {
-  display: none;
-}
-.city.active .city-body {
-  display: grid;
-}
+.city.active .city-header { display: none; }
+.city.active .city-body   { display: grid; }
 
 .city-data-major {
   grid-row: 1/3;
@@ -222,15 +218,13 @@ hr {
   font-size: .8em;
 }
 
-.forecast-day-title { grid-column: 1/3; }
+.forecast-day-title { grid-column: 1/3; font-size: .9em;}
 
 /* BUTTONS */
 .my_btn {
   --prm-color: teal;
   --sec-color: orange;
   --trt-color: #282c44;
-  /* border: .1em solid var(--prm-color); */
-  /* border-radius: .25em; */
   padding: .25em;
   color: var(--prm-color);
   background: transparent;

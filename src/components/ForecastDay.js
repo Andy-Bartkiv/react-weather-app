@@ -1,18 +1,22 @@
 import WeatherIcon from "./WeatherIcon";
 import WeatherTemp from "./WeatherTemp";
+import forecastToDisplay from "../utils/forecastToDisplay";
 
 const ForecastDay = ({ i, city }) => {
+    
+    const dataForecast = forecastToDisplay(i, city);
+
     return (
         <div className="forecast-day">
             <div className="forecast-day-title">
-                {city.forecast[i*8+3].dt_txt.slice(11,13) }, {city.forecast[i*8+7].dt_txt.slice(11,13) }
+                { dataForecast.title }
             </div>
             
-            <WeatherIcon icon={ city.forecast[i*8+3].weather[0].icon }/>
-            <WeatherIcon icon={ city.forecast[i*8+7].weather[0].icon }/>
+            <WeatherIcon icon={ dataForecast.icons[0] }/>
+            <WeatherIcon icon={ dataForecast.icons[1] }/>
             
-            <WeatherTemp tempCelsius={ city.forecast[i*8+3].main.temp} size=".85em"/>
-            <WeatherTemp tempCelsius={ city.forecast[i*8+7].main.temp } size=".85em"/>
+            <WeatherTemp tempCelsius={ dataForecast.temps[0] } size=".85em"/>
+            <WeatherTemp tempCelsius={ dataForecast.temps[1] } size=".85em"/>
         </div>
     )
 }
