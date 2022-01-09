@@ -7,7 +7,7 @@ import { DataContext } from "../context";
 
 const CitiesList = ({ cities, setCities }) => {
 
-    const API_LIMIT = 30; // 60
+    const API_LIMIT = 55; // 60
     const delayRefresh = () => 60 * (Math.floor(Math.random() * 15) + 60);
 
     const { min, 
@@ -20,17 +20,18 @@ const CitiesList = ({ cities, setCities }) => {
     const [drgCity, setDrgCity] = useState(null);
     const [tmpCities, setTmpCities] = useState(null);
     
-                                    useEffect( () => getAllWeather(cities), []);
+                                useEffect( () => getAllWeather(cities), []);
 
     useEffect( () => setApiReq(0), [min]);
 
     function deleteCity(event, cityID) {
         event.stopPropagation();
         setDelID(cityID);
-        setActiveCity(null);
         setTimeout( () => {
             setCities(cities.filter( city => city.id !== cityID))
             setDelID(null);
+            if (cityID === activeCity.id) 
+                setActiveCity(null);
         }, 250); // timeout for Delete City animation = should match with CSS param
     }
 
@@ -55,7 +56,7 @@ const CitiesList = ({ cities, setCities }) => {
                 continue;
             }
             if ( apiReq < API_LIMIT ) {
-                console.log('- - - - - getting weather for', city.name)
+                                                            console.log('- - - - - getting weather for', city.name)
                 setApiReq(apiReq+1);
                 let cityName = city.name;
                 if (city.country) 
