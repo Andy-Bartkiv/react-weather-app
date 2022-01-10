@@ -16,13 +16,23 @@ const CitiesList = ({ cities, setCities }) => {
         activeCity, setActiveCity, 
         } = useContext(DataContext);
 
+    const [initLoading, setInitLoading] = useState(true);
     const [delID, setDelID] = useState(null);
     const [drgCity, setDrgCity] = useState(null);
     const [tmpCities, setTmpCities] = useState(null);
     
                                 useEffect( () => getAllWeather(cities), []);
 
-    useEffect( () => setApiReq(0), [min]);
+    useEffect( () => {
+        if (apiReq > 0) setApiReq(Math.floor(apiReq/2))
+    }, [min]);
+
+    useEffect( () => {
+        if (!initLoading && first) {
+            toggleActive(cities[0].id);
+            setFirst(false);
+        }
+    }, [initLoading]);
 
     function deleteCity(event, cityID) {
         event.stopPropagation();
@@ -47,7 +57,6 @@ const CitiesList = ({ cities, setCities }) => {
     }
 
     async function getAllWeather(cities) {
-        // console.log('getAllWeather', delayRefresh());
         const newCities = [];
         for (let city of cities) {
             const dt = (city.dt) ? city.dt : 0;
@@ -63,19 +72,14 @@ const CitiesList = ({ cities, setCities }) => {
                     cityName += `,` + city.country;    
                 const resp = await WeatherService.getWeather(cityName);
                 const cityData = processWeatherData(resp);
-                let cityForecast = null;
-                if (first) {
-                    setFirst(false);
-                    const resp2 = await WeatherService.getForecast(cityName);
-                    cityForecast = processForecastData(resp2);
-                }
-                newCities.push({...city, ...cityData, ...cityForecast});
+                newCities.push({ ...city, ...cityData });
             } else {
                 alert(`${apiReq}: Too much API requests per minute. Try again later.`);
                 newCities.push({...city});
             }
         }
         setCities(newCities);
+        setInitLoading(false);
     }
     
     async function getForecast(cityID) {

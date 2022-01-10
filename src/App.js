@@ -15,7 +15,7 @@ function App() {
   const [min, setMin] = useState(null);
   const [is3D, setIs3D] = useState(true);
   const [isCelsius, setIsCelsius] = useState(true);
-  const [activeCity, setActiveCity] = useState(FIVE_CITIES[0]);
+  const [activeCity, setActiveCity] = useState(null);
   const [first, setFirst] = useState(true);
   const [apiReq, setApiReq] = useState(0);
 
