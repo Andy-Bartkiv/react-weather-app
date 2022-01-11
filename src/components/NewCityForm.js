@@ -18,18 +18,13 @@ function NewCityForm({ cities, setCities }) {
       const validName = (resp.data.length > 0);
       
       const goodCity = resp.data.find(respCity => {
-        return !cities.find(city => {
-          // console.log(city.name + city.country, respCity.name + respCity.country)
-          return (respCity.name + respCity.country == city.name + city.country)
-        })
+        return !cities.find(city => (respCity.name + respCity.country == city.name + city.country))
       })
 
       if (validName && goodCity) {
         const citySearch = `${goodCity.name}, ${goodCity.country}`;
-        // console.log(citySearch, resp.data);
         const resp2 = await WeatherService.getWeather(citySearch);
         const newCity = processWeatherData(resp2);
-        // console.log(newCity);
         setCities([...cities, newCity]);
         setCityName('');
       } else {

@@ -1,0 +1,33 @@
+.sort_bar {
+    --prm-color: teal;
+    font-size: 1.25em; 
+    display: flex;
+    align-items: flex-end;
+    max-width: 125vh ;
+    width: 100%;
+    margin: 0 auto;
+    margin-top: .5em;
+}
+
+.sort_item {
+    color: var(--prm-color);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: .25em;
+    box-shadow: 0 -0.05em .015em .015em teal;
+    padding: .25em 0;
+    cursor: pointer;
+    transition: .25s;
+}
+
+.sort_item:hover {
+    padding: .35em 0;
+}
+
+.sort_item.active {
+    --prm-color: #ffa500aa;
+    padding: .35em 0;
+    background: #282c44;
+}

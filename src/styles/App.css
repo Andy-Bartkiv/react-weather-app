@@ -69,7 +69,7 @@ a {
 }
 
 .App-body {
-  margin-bottom: .25em;
+  /* margin-bottom: .25em; */
   padding: 0 2.5vmin;
   flex: 1 1 auto;
   display: flex;

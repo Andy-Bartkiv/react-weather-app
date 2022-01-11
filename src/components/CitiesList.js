@@ -2,7 +2,9 @@ import WeatherService from "../API/WeatherService";
 import processWeatherData from "../utils/processWeatherData";
 import processForecastData from "../utils/processForecastData";
 import CityItem from "./CityItem";
+import SortBar from './UI/sortbar/SortBar';
 import { useContext, useState, useEffect } from "react";
+import useSortedList from "../hooks/useSortedList"
 import { DataContext } from "../context";
 
 const CitiesList = ({ cities, setCities }) => {
@@ -16,10 +18,13 @@ const CitiesList = ({ cities, setCities }) => {
         activeCity, setActiveCity, 
         } = useContext(DataContext);
 
+    const [sort, setSort] = useState({ value:'', reverse: false });
     const [initLoading, setInitLoading] = useState(true);
     const [delID, setDelID] = useState(null);
     const [drgCity, setDrgCity] = useState(null);
     const [tmpCities, setTmpCities] = useState(null);
+
+    const sortedCities = useSortedList(cities, sort);
     
                                 useEffect( () => getAllWeather(cities), []);
 
@@ -29,7 +34,7 @@ const CitiesList = ({ cities, setCities }) => {
 
     useEffect( () => {
         if (!initLoading && first) {
-            toggleActive(cities[0].id);
+            if (cities[0]) toggleActive(cities[0].id);
             setFirst(false);
         }
     }, [initLoading]);
@@ -100,8 +105,10 @@ const CitiesList = ({ cities, setCities }) => {
     }
     
     return (
+        <>
         <div className="city-list">
-            { cities.map( (city) => {
+        {/* Cities List */}
+            { sortedCities.map( (city) => {
                 const clsActive = (activeCity && activeCity.id === city.id) ? ' active' : '';
                 const clsDel = (delID === city.id) ? ' delete' : '';
                 return (
@@ -115,9 +122,13 @@ const CitiesList = ({ cities, setCities }) => {
                         />
                     </div>
                 )
-            }
-            )}
+            })}
         </div>
+        {/* Sorting Mode Panel */}
+            { sortedCities.length > 1 &&
+                <SortBar clsName='city' sort={ sort } setSort={ setSort }/>
+            }
+        </>
     )
 }
 
