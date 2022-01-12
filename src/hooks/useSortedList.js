@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-const useSortedList = (list, sort, swap) => {
+const useSortedList = (list, sort) => {
 
     const compare = (x, y, reverse = false) => {
         const [a, b] = (reverse) ? [x,y] : [y,x];
@@ -21,10 +21,8 @@ const useSortedList = (list, sort, swap) => {
     const sortedList = useMemo( () => {
         return (sort.value)
             ? [...list].sort( (a,b) => compare(a[sort.value], b[sort.value], sort.reverse) )
-            : (swap)
-                ? swapItems([...list], swap)
-                : list
-    }, [list, sort, swap]);
+            : list
+    }, [list, sort]);
 
     return sortedList;
 }
