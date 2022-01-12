@@ -9,15 +9,6 @@ const useSortedList = (list, sort) => {
             : a - b;
     }
 
-    const swapItems = (array, ind) => {
-        return array.map( (val, i) => 
-            (i === ind.a)
-                ? list[ind.b]
-                : (i === ind.b)
-                    ? list[ind.a]
-                    : val)   
-    }
-
     const sortedList = useMemo( () => {
         return (sort.value)
             ? [...list].sort( (a,b) => compare(a[sort.value], b[sort.value], sort.reverse) )
