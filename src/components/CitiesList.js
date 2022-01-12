@@ -3,8 +3,8 @@ import processWeatherData from "../utils/processWeatherData";
 import processForecastData from "../utils/processForecastData";
 import CityItem from "./CityItem";
 import SortBar from './UI/sortbar/SortBar';
-import { useContext, useState, useEffect } from "react";
-import useSortedList from "../hooks/useSortedList"
+import { useContext, useState, useEffect, useRef } from "react";
+import useSortedList from "../hooks/useSortedList";
 import { DataContext } from "../context";
 
 const CitiesList = ({ cities, setCities }) => {
@@ -21,12 +21,20 @@ const CitiesList = ({ cities, setCities }) => {
     const [sort, setSort] = useState({ value:'', reverse: false });
     const [initLoading, setInitLoading] = useState(true);
     const [delID, setDelID] = useState(null);
+
+    const [drg, setDrg] = useState(false);
+    const [drgEnter, setDrgEnter] = useState(null);
+    const [swap, setSwap] = useState({a:null, b:null})
     const [drgCity, setDrgCity] = useState(null);
     const [tmpCities, setTmpCities] = useState(null);
 
-    const sortedCities = useSortedList(cities, sort);
+    const sortedCities = useSortedList(cities, sort, swap);
+
+    const drgMode = !sort.value;
+    const drgItem = useRef();
+    const drgNode = useRef();
     
-                                useEffect( () => getAllWeather(cities), []);
+                                // useEffect( () => getAllWeather(cities), []);
 
     useEffect( () => {
         if (apiReq > 0) setApiReq(Math.floor(apiReq/2))
@@ -39,6 +47,50 @@ const CitiesList = ({ cities, setCities }) => {
         }
     }, [initLoading]);
 
+    function handleDragStart(event, city) {
+        event.stopPropagation();
+        console.log('Drag START @', city.name);
+        setDrgEnter(null);
+        drgItem.current = city;
+        drgNode.current = event.target;
+        drgNode.current.addEventListener('dragend', handleDragEnd);
+        setTmpCities(cities);
+        setTimeout( () => setDrg(true), 0);
+    }
+
+    function handleDragEnd() {
+        console.log('DRG END')
+        drgItem.current = null;
+        drgNode.current.removeEventListener('dragend', handleDragEnd);
+        drgNode.current = null;
+        setDrg(false);
+        // setSwap(null);
+    }
+
+    function handleDragEnter(event, city) {
+        event.stopPropagation();
+        // console.log(drgEnter, city.name)
+        if (drgEnter !== city) {
+            setDrgEnter(city);
+            const currentItem = drgItem.current;
+            const ind1 = cities.indexOf(currentItem);
+            const ind2 = cities.indexOf(city);
+            console.log('Drag ENTER', city.name, ind1, ind2);
+            if (event.target !== drgNode.current) {
+                setSwap({a:ind1, b:ind2})
+                // setDrgEnter(null);
+                // drgItem.current = city;
+                // const newArray = tmpCities.splice(ind1,1);
+                // console.log(newArray, tmpCities);
+                // setCities(oldList => {
+                //     let newList = JSON.parse(JSON.stringify(oldList));
+                //     newList.splice(ind2, 0, newArray[0]);
+                //     return newList;
+                // });
+            }
+        }
+    }
+
     function deleteCity(event, cityID) {
         event.stopPropagation();
         setDelID(cityID);
@@ -50,12 +102,12 @@ const CitiesList = ({ cities, setCities }) => {
         }, 250); // timeout for Delete City animation = should match with CSS param
     }
 
-    function toggleActive(cityID) {
+    function toggleActive(city) {
         let currentActiveCity = null;
-        if (!activeCity || activeCity.id !== cityID) {
-            currentActiveCity = cities.find( city => city.id === cityID );
-            if (!currentActiveCity.forecast || Date.now()/1000 > currentActiveCity.forecast[0].dt) {
-                getForecast(cityID);
+        if (!activeCity || activeCity.id !== city.id) {
+            currentActiveCity = city;
+            if (!city.forecast || Date.now()/1000 > city.forecast[0].dt) {
+                getForecast(city.id);
             }
         }
         setActiveCity(currentActiveCity);
@@ -103,7 +155,7 @@ const CitiesList = ({ cities, setCities }) => {
             alert(`${apiReq}: Too much API requests per minute. Try again later.`)
         }
     }
-    
+
     return (
         <>
         <div className="city-list">
@@ -111,14 +163,20 @@ const CitiesList = ({ cities, setCities }) => {
             { sortedCities.map( (city) => {
                 const clsActive = (activeCity && activeCity.id === city.id) ? ' active' : '';
                 const clsDel = (delID === city.id) ? ' delete' : '';
+                const clsDrg = (drg && drgItem.current.id === city.id) ? ' dragging' : '';
                 return (
-                    <div key={ city.id } 
-                        className={ `city` + clsActive + clsDel } 
-                        onClick={ () => toggleActive(city.id) }
-                    >    
+                    <div key={ city.id }
+                        className={ `city` + clsActive + clsDel + clsDrg } 
+                        onClick={ () => toggleActive(city) }
+                        draggable={ drgMode }
+                        onDragStart={ (e) => handleDragStart(e, city) }
+                        // onDragEnd={ handleDragEnd }
+                        onDragEnter={ (e) => handleDragEnter(e, city) }
+                        >    
                         <CityItem
                             city={ city } 
-                            deleteCity={ deleteCity } 
+                            deleteCity={ deleteCity }
+                            onDragEnter={ () => console.log('surprise') }
                         />
                     </div>
                 )

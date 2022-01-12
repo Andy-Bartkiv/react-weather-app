@@ -128,7 +128,7 @@ hr {
   cursor: pointer;
   background: #24282d;
   position: relative;
-  transition: .25s;
+  transition: all .25s, visibility 0;
   margin-bottom: .5em;
 }
 
@@ -171,7 +171,7 @@ hr {
   grid-template-columns: 1fr 1fr 1fr 1fr;
   font-size: 1em;
   opacity: 1;
-  transition: .25s linear;
+  transition: all .25s linear, visibility 0;
 }
 
 .city-header > * {
@@ -185,7 +185,7 @@ hr {
   display: grid;
   font-size: 0em;
   opacity: .25;
-  transition: .25s linear;
+  transition: all .25s linear, visibility 0;
   grid-template-columns: 1fr 3fr;
   gap: .25em;
 }
@@ -252,9 +252,14 @@ hr {
   color: var(--prm-color);
   background: transparent;
   cursor: pointer;
-  transition: .25s;
+  transition: all .25s, visibility 0;
   z-index: 2;
 }
 
 .my_btn:hover { --prm-color: orange; }
 .my_btn:active { transform: scale(1.5); }
+
+.dragging {
+  transition: 0;
+  visibility: hidden;
+}

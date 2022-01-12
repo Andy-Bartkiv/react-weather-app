@@ -23,12 +23,10 @@ const SortBar = ({ sort, setSort }) => {
         ];
 
     const handleClick = (optValue) => {
-        console.log(sort)
-        if (sort.value === optValue)
-            setSort({ value: optValue, reverse: !sort.reverse });
-
-        else
-            setSort({ value: optValue, reverse: sort.reverse });
+        const newSort = (optValue === sort.value)
+            ? { ...sort, reverse: !sort.reverse }
+            : { ...sort, value: optValue };
+        setSort(newSort);
     }
 
     return (
