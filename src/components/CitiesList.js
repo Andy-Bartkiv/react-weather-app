@@ -37,9 +37,8 @@ const CitiesList = ({ cities, setCities }) => {
         displayCities.push({id: i}, city);
     });
     displayCities.push({id: sourceCities.length});
-
     
-    // useEffect( () => getAllWeather(cities), []);
+    useEffect( () => getAllWeather(cities), []);
 
     // half api request counter each minute
     useEffect( () => {
