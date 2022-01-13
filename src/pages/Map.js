@@ -20,7 +20,10 @@ const Map = () => {
   }, []);
 
   return (
-    <div ref={ targetRef } className="App-body" style={{ padding: (is3D) && '0' }}>
+    <div ref={ targetRef } 
+      className="App-body" 
+      style={{ padding: (is3D) && '0' }}
+    >
       { (is3D)
         ? <GlobeGL center={ coord } dim={ dim }/>
         : <PigeonMap center={ coord }/>

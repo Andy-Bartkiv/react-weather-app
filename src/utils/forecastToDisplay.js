@@ -1,9 +1,7 @@
-
 const forecastToDisplay = (i, city) => {
     let res = {};
     
     const toLocal = (time) => new Date(1000*(time + city.offset));
-    const tlds = (t) => t.toLocaleDateString('en-US', { timeZone: "UTC", month: 'short', day: '2-digit' })
     const tlds2 = (t) => t.toLocaleDateString('en-US', { timeZone: "UTC", weekday: 'short', month: 'short', day: '2-digit' })    
     
     const date = new Date(Date.now() + (city.offset*1000) + 86400000*i);
@@ -14,7 +12,6 @@ const forecastToDisplay = (i, city) => {
         .filter( ts => 
             [2, 3, 4, 14, 15, 16].includes(toLocal(ts.dt).getUTCHours()) )
     if (i === 0) {
-        // res.title = `Today, ${tlds(date)}`;
         res.title = `Today`;
         res.icons = (oneDayForecast.length === 2)
             ? oneDayForecast.map(odf => odf.weather[0].icon)

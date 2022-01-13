@@ -1,5 +1,4 @@
 import cls from './SortBar.module.css'
-import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { MdLocationCity, MdOutlineFlag, MdOutlineAccessTime } from "react-icons/md";
 import { BsThermometerSun } from 'react-icons/bs';
@@ -14,7 +13,7 @@ const SortBar = ({ sort, setSort }) => {
     const options = [
         { value: 'name', icon: <MdLocationCity/> },
         { value: 'country', icon: <MdOutlineFlag/> },
-        { value: '', icon: <VscSortPrecedence style={{ transform:'scale(1)'}}/> },
+        { value: '', icon: <VscSortPrecedence/> },
         { value: 'offset', icon: <MdOutlineAccessTime/> },
         { value: 'temp', icon: <BsThermometerSun/>},
         // { value: 'humidity', icon: <WiHumidity/> },

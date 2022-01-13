@@ -1,6 +1,6 @@
 import './styles/App.css';
 import FIVE_CITIES from './data/fiveCities';
-import { HashRouter, BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { DataContext } from './context';
 import Header from './components/Header';
@@ -35,7 +35,6 @@ function App() {
       apiReq, setApiReq         // count limits for api call per minute
     }}>
     <HashRouter>
-    {/* <BrowserRouter> */}
       <div className="App">
 
         <Header />
@@ -45,7 +44,6 @@ function App() {
         <AppRouter />
         
       </div>
-    {/* <BrowserRouter> */}
     </HashRouter>
     </DataContext.Provider>
   );

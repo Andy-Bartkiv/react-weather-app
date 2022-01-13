@@ -1,6 +1,7 @@
 import WeatherService from "../API/WeatherService";
 import processWeatherData from "../utils/processWeatherData";
 import processForecastData from "../utils/processForecastData";
+import { addClassName, removeClassName } from "../utils/toggleClassName";
 import CityItem from "./CityItem";
 import SortBar from './UI/sortbar/SortBar';
 import { useContext, useState, useEffect, useRef } from "react";
@@ -10,6 +11,7 @@ import { DataContext } from "../context";
 const CitiesList = ({ cities, setCities }) => {
 
     const API_LIMIT = 55; // 60
+    // different refresh rate weatherdata to avoid API_Limit break  
     const delayRefresh = () => 60 * (Math.floor(Math.random() * 15) + 60);
 
     const { min, 
@@ -26,7 +28,7 @@ const CitiesList = ({ cities, setCities }) => {
     const sortedCities = useSortedList(cities, sort);
 
     const [drgCity, setDrgCity] = useState(null);
-    const [divHide, setDivHide] = useState(null);
+    const [drgIndex, setDrgIndex] = useState(null);
     const divRef = useRef([]);
 
     const displayCities = [];
@@ -39,10 +41,12 @@ const CitiesList = ({ cities, setCities }) => {
     
     // useEffect( () => getAllWeather(cities), []);
 
+    // half api request counter each minute
     useEffect( () => {
         if (apiReq > 0) setApiReq(Math.floor(apiReq/2))
     }, [min]);
 
+    // Open (make active) first city tab at first App run 
     useEffect( () => {
         if (!initLoading && first) {
             if (cities[0]) toggleActive(cities[0]);
@@ -81,7 +85,7 @@ const CitiesList = ({ cities, setCities }) => {
                 continue;
             }
             if ( apiReq < API_LIMIT ) {
-                                                            console.log('- - - - - getting weather for', city.name)
+                                                            // console.log('- - - - - getting weather for', city.name)
                 setApiReq(apiReq+1);
                 let cityName = city.name;
                 if (city.country) 
@@ -115,29 +119,25 @@ const CitiesList = ({ cities, setCities }) => {
         }
     }
 
-
-    //   - - - - DRAG HANDLERS 
+/////////////////////////// DRAG-n-DROP HANDLERS 
       
-    function handleDragStart(e, city) {
+    const handleDragStart = (city) => {
         setTimeout( () => {
+            const cityIndex = sourceCities.indexOf(city);
             if (divRef.current) 
-                addClassName(divRef.current[sourceCities.indexOf(city) + 1], ['active', 'instant']);
-            setDivHide(sourceCities.indexOf(city));
+                addClassName(divRef.current[cityIndex + 1], ['active', 'instant']);
             setDrgCity(city);
+            setDrgIndex(cityIndex);
         }, 0)
         setTimeout( () => {
             removeClassName(divRef.current[sourceCities.indexOf(city) + 1], ['instant'])
         }, 50)
-        // console.log('drag START', city.name, divHide);
     }
-
-    const handleDragEnd = (e, city) => {
-        // console.log('drag END', city.name, drgCity.name);
-            setDrgCity(null);
-            setDivHide(null);
-            removeClassName(divRef.current[sourceCities.indexOf(city) + 1], ['active']);
+    const handleDragEnd = (city) => {
+        removeClassName(divRef.current[sourceCities.indexOf(city) + 1], ['active']);
+        setDrgCity(null);
+        setDrgIndex(null);
     }
-
     const handleDragEnter = (dropInd) => {
         console.log('drag Enter', dropInd);
         addClassName(divRef.current[dropInd], ['active']);
@@ -147,41 +147,27 @@ const CitiesList = ({ cities, setCities }) => {
         removeClassName(divRef.current[dropInd], ['active']);
         removeClassName(divRef.current[sourceCities.indexOf(drgCity) + 1], ['active', 'instant']);
     }
-
     const handleDrop = (e, dropInd) => {
         e.preventDefault();
         addClassName(divRef.current[dropInd], ['instant']);
         removeClassName(divRef.current[dropInd], ['active']);
         const indA = sourceCities.indexOf(drgCity);
         const indB = (dropInd > indA) ? dropInd - 1 : dropInd;
-        // console.log('DROP', indA, dropInd, indB );
         const newArray = [...cities];
         newArray.splice(indA, 1);
         newArray.splice(indB, 0, drgCity);
         setCities(newArray);
-        // setDrgCity(null);
         setTimeout( () => {
             removeClassName(divRef.current[dropInd], ['instant'])
         }, 0)
     } 
-
-    const addClassName = (el, clsNames) => {
-        clsNames.forEach(cls => {
-            if (!el.className.includes(cls))
-                el.className = el.className + ' ' + cls;
-        })
-    }    
-    const removeClassName = (el, clsNames) => {
-        clsNames.forEach(cls =>
-            el.className = el.className.replace(` ${cls}`, ''));
-    } 
-
+//////////////////////////////////////////////////////////////////////
     return (
         <>
         <div className="city-list">
         {/* Cities List */}
             { displayCities.map( (city, i) => {
-                if (i % 2 !== 0) {
+                if (i % 2 !== 0) { // CITY tabs themselves
                     const clsActive = (activeCity && activeCity.id === city.id) ? ' active' : '';
                     const clsDel = (delID === city.id) ? ' delete' : '';
                     const clsDrg = (drgCity && drgCity.id === city.id) ? ' dragging' : '';
@@ -190,8 +176,8 @@ const CitiesList = ({ cities, setCities }) => {
                             className={ `city` + clsActive + clsDel + clsDrg }
                             onClick={ () => toggleActive(city) }
                             draggable={ drgMode }
-                            onDragStart={ e => handleDragStart(e, city) }
-                            onDragEnd={ e => handleDragEnd(e, city) }
+                            onDragStart={ () => handleDragStart(city) }
+                            onDragEnd={ () => handleDragEnd(city) }
                         >    
                             <CityItem
                                 city={ city } 
@@ -199,16 +185,14 @@ const CitiesList = ({ cities, setCities }) => {
                             />
                         </div>
                     )
-                } else {
+                } else { // dividers between each CITY tab
                     const clsLast = (city.id === sourceCities.length) ? ' last' : '';
-                    // const clsActive = (dropZoneIndex === city.id || divW === city.id) ? ' active' : '';
-                    const clsActive = '';
-                    const clsHide = (divHide === city.id) ? ' hide' : '';
+                    const clsHide = (city.id === drgIndex) ? ' hide' : '';
                     return (
-                    <div key={city.id}
-                        ref={el => divRef.current[city.id] = el}
-                        className={"city-divider" + clsLast + clsActive + clsHide}
-                        style={ { zIndex: (drgCity) ? '3' : '-3' }}
+                    <div key={ city.id }
+                        ref={ el => divRef.current[city.id] = el }
+                        className={ "city-divider" + clsLast + clsHide }
+                        style={{ zIndex: (drgCity) ? '3' : '-3' }}
                         onDragEnter={ () => handleDragEnter(city.id) }
                         onDragLeave={ () => handleDragLeave(city.id) }
                         onDragOver={ (e) => e.preventDefault() }

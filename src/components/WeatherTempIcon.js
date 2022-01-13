@@ -12,7 +12,7 @@ const WeatherTempIcon = ({ tempCelsius }) => {
 
     return (
         <div style={{ display: 'flex', marginLeft:'.1em' }}>
-            { (cityTemp > 0) ? <BsThermometerSun /> : <BsThermometerSnow /> }
+            { (tempCelsius > 0) ? <BsThermometerSun /> : <BsThermometerSnow /> }
             { tempCelsius ? temp : <Loader/>}
         </div>
     )
