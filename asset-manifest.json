@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/react-weather-app/static/css/main.b1359c21.css",
-    "main.js": "/react-weather-app/static/js/main.ffb547c5.js",
+    "main.css": "/react-weather-app/static/css/main.4cf2bf23.css",
+    "main.js": "/react-weather-app/static/js/main.ec8a27b6.js",
     "static/media/earth-blue-marble.jpg": "/react-weather-app/static/media/earth-blue-marble.7deee995d548fe65faff.jpg",
     "index.html": "/react-weather-app/index.html",
-    "main.b1359c21.css.map": "/react-weather-app/static/css/main.b1359c21.css.map",
-    "main.ffb547c5.js.map": "/react-weather-app/static/js/main.ffb547c5.js.map"
+    "main.4cf2bf23.css.map": "/react-weather-app/static/css/main.4cf2bf23.css.map",
+    "main.ec8a27b6.js.map": "/react-weather-app/static/js/main.ec8a27b6.js.map"
   },
   "entrypoints": [
-    "static/css/main.b1359c21.css",
-    "static/js/main.ffb547c5.js"
+    "static/css/main.4cf2bf23.css",
+    "static/js/main.ec8a27b6.js"
   ]
 }
