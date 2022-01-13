@@ -3,7 +3,7 @@ import processWeatherData from "../utils/processWeatherData";
 import processForecastData from "../utils/processForecastData";
 import CityItem from "./CityItem";
 import SortBar from './UI/sortbar/SortBar';
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import useSortedList from "../hooks/useSortedList";
 import { DataContext } from "../context";
 
@@ -26,9 +26,8 @@ const CitiesList = ({ cities, setCities }) => {
     const sortedCities = useSortedList(cities, sort);
 
     const [drgCity, setDrgCity] = useState(null);
-    const [dropZoneIndex, setDropZoneIndex] = useState(null);
     const [divHide, setDivHide] = useState(null);
-    const [divW, setDivW] = useState(null);
+    const divRef = useRef([]);
 
     const displayCities = [];
     const sourceCities = (drgMode) ? cities : sortedCities
@@ -38,7 +37,7 @@ const CitiesList = ({ cities, setCities }) => {
     displayCities.push({id: sourceCities.length});
 
     
-    useEffect( () => getAllWeather(cities), []);
+    // useEffect( () => getAllWeather(cities), []);
 
     useEffect( () => {
         if (apiReq > 0) setApiReq(Math.floor(apiReq/2))
@@ -121,44 +120,60 @@ const CitiesList = ({ cities, setCities }) => {
       
     function handleDragStart(e, city) {
         setTimeout( () => {
+            if (divRef.current) 
+                addClassName(divRef.current[sourceCities.indexOf(city) + 1], ['active', 'instant']);
             setDivHide(sourceCities.indexOf(city));
-            setDivW(sourceCities.indexOf(city) + 1);
             setDrgCity(city);
         }, 0)
+        setTimeout( () => {
+            removeClassName(divRef.current[sourceCities.indexOf(city) + 1], ['instant'])
+        }, 50)
         // console.log('drag START', city.name, divHide);
     }
 
     const handleDragEnd = (e, city) => {
-        // console.log('drag END', city.name);
-        // setTimeout( () => {
+        // console.log('drag END', city.name, drgCity.name);
             setDrgCity(null);
             setDivHide(null);
-            setDivW(null);
-        // }, 0)
+            removeClassName(divRef.current[sourceCities.indexOf(city) + 1], ['active']);
     }
 
     const handleDragEnter = (dropInd) => {
-        // console.log('drag Enter', dropInd);
-        setDropZoneIndex(dropInd);
+        console.log('drag Enter', dropInd);
+        addClassName(divRef.current[dropInd], ['active']);
     } 
-    const handleDragLeave = (ph) => {
-        // console.log('drag LEAVE', ph);
-        setDropZoneIndex(null);
-        setDivW(null);
+    const handleDragLeave = (dropInd) => {
+        console.log('drag LEAVE', dropInd);
+        removeClassName(divRef.current[dropInd], ['active']);
+        removeClassName(divRef.current[sourceCities.indexOf(drgCity) + 1], ['active', 'instant']);
     }
 
     const handleDrop = (e, dropInd) => {
         e.preventDefault();
-        setDropZoneIndex(null);
+        addClassName(divRef.current[dropInd], ['instant']);
+        removeClassName(divRef.current[dropInd], ['active']);
         const indA = sourceCities.indexOf(drgCity);
         const indB = (dropInd > indA) ? dropInd - 1 : dropInd;
         // console.log('DROP', indA, dropInd, indB );
         const newArray = [...cities];
         newArray.splice(indA, 1);
         newArray.splice(indB, 0, drgCity);
-        // setTimeout(() => {
-            setCities(newArray);
-        // }, 0)
+        setCities(newArray);
+        // setDrgCity(null);
+        setTimeout( () => {
+            removeClassName(divRef.current[dropInd], ['instant'])
+        }, 0)
+    } 
+
+    const addClassName = (el, clsNames) => {
+        clsNames.forEach(cls => {
+            if (!el.className.includes(cls))
+                el.className = el.className + ' ' + cls;
+        })
+    }    
+    const removeClassName = (el, clsNames) => {
+        clsNames.forEach(cls =>
+            el.className = el.className.replace(` ${cls}`, ''));
     } 
 
     return (
@@ -186,11 +201,14 @@ const CitiesList = ({ cities, setCities }) => {
                     )
                 } else {
                     const clsLast = (city.id === sourceCities.length) ? ' last' : '';
-                    const clsActive = (dropZoneIndex === city.id || divW === city.id) ? ' active' : '';
+                    // const clsActive = (dropZoneIndex === city.id || divW === city.id) ? ' active' : '';
+                    const clsActive = '';
                     const clsHide = (divHide === city.id) ? ' hide' : '';
                     return (
                     <div key={city.id}
-                        className={"city-divider" + clsLast + clsActive + clsHide} 
+                        ref={el => divRef.current[city.id] = el}
+                        className={"city-divider" + clsLast + clsActive + clsHide}
+                        style={ { zIndex: (drgCity) ? '3' : '-3' }}
                         onDragEnter={ () => handleDragEnter(city.id) }
                         onDragLeave={ () => handleDragLeave(city.id) }
                         onDragOver={ (e) => e.preventDefault() }

@@ -22,7 +22,8 @@ body {
   --sec-color: #61dafb;
   --sec-color: teal;
   --wht-color: whitesmoke;
-  --delay-tr: .125s;
+  --delay-tr: 0s;
+  --delay-tr: .25s;
 }
 
 .App {
@@ -265,20 +266,26 @@ hr {
 }
 
 .city-divider {
-  height: .75em;
-  /* background: darkslategrey; */
-  opacity: 0;
-  transition: var(--delay-tr)  linear;
+  height: 1.8em;
+  transition: var(--delay-tr) linear;
+  margin: -.5em 0;
 }
 
 .city-divider.active {
-  height: 3.4em;
+  height: 4.5em;
+}
+
+.instant {
+  transition: 0s !important;
 }
 
 .city-divider.last{
   flex: 1 0 auto;
+  transition: 0;
 }
 
 .city-divider.hide {
-  font-size: 0;
+  display: none;
 }
+
+.city-divider.red {border: 5px solid red}
