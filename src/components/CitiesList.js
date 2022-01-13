@@ -3,7 +3,7 @@ import processWeatherData from "../utils/processWeatherData";
 import processForecastData from "../utils/processForecastData";
 import CityItem from "./CityItem";
 import SortBar from './UI/sortbar/SortBar';
-import { useContext, useState, useEffect, useRef } from "react";
+import { useContext, useState, useEffect } from "react";
 import useSortedList from "../hooks/useSortedList";
 import { DataContext } from "../context";
 
@@ -25,21 +25,20 @@ const CitiesList = ({ cities, setCities }) => {
     const drgMode = !sort.value;
     const sortedCities = useSortedList(cities, sort);
 
-    const [drgCities, setDrgCities] = useState(cities);
     const [drgCity, setDrgCity] = useState(null);
     const [dropZoneIndex, setDropZoneIndex] = useState(null);
     const [divHide, setDivHide] = useState(null);
     const [divW, setDivW] = useState(null);
 
     const displayCities = [];
-    const sourceCities = (drgMode) ? drgCities : sortedCities
+    const sourceCities = (drgMode) ? cities : sortedCities
     sourceCities.forEach( (city, i) => {
         displayCities.push({id: i}, city);
     });
     displayCities.push({id: sourceCities.length});
 
     
-                                // useEffect( () => getAllWeather(cities), []);
+    useEffect( () => getAllWeather(cities), []);
 
     useEffect( () => {
         if (apiReq > 0) setApiReq(Math.floor(apiReq/2))
@@ -47,7 +46,7 @@ const CitiesList = ({ cities, setCities }) => {
 
     useEffect( () => {
         if (!initLoading && first) {
-            if (cities[0]) toggleActive(cities[0].id);
+            if (cities[0]) toggleActive(cities[0]);
             setFirst(false);
         }
     }, [initLoading]);
@@ -57,7 +56,6 @@ const CitiesList = ({ cities, setCities }) => {
         setDelID(cityID);
         setTimeout( () => {
             setCities(cities.filter( city => city.id !== cityID));
-            setDrgCities(cities.filter( city => city.id !== cityID));
             setDelID(null);
             if (activeCity && cityID === activeCity.id) 
                 setActiveCity(null);
@@ -155,12 +153,11 @@ const CitiesList = ({ cities, setCities }) => {
         const indA = sourceCities.indexOf(drgCity);
         const indB = (dropInd > indA) ? dropInd - 1 : dropInd;
         // console.log('DROP', indA, dropInd, indB );
-        const newArray = [...drgCities];
+        const newArray = [...cities];
         newArray.splice(indA, 1);
         newArray.splice(indB, 0, drgCity);
         // setTimeout(() => {
             setCities(newArray);
-            setDrgCities(newArray);
         // }, 0)
     } 
 
