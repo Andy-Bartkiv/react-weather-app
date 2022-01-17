@@ -27,7 +27,7 @@ const Navbar = () => {
                 <Link to={ '/map' }> <div>Map</div> </Link>
             </li>
         {/* FIVE CITIES tab */}
-            <li className={(active === '/five-cities') ? 'active' : '' }><Link to={ '/five-cities' }>Five Cties</Link></li>
+            <li className={(active === '/five-cities') ? 'active' : '' }><Link to={ '/five-cities' }>Five Cities</Link></li>
         {/* MY LIST tab */}
             <li className={(active === '/my-list') ? 'active' : '' }><Link to={ '/my-list' }>My List</Link></li>
         </ul>
